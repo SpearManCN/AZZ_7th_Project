@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="/bootstrap.min.css">
+    <title>Sign In</title>
+    <style>
+        .list-group-item:hover {
+            background-color: #6b73d5; /* Bootstrap의 primary 색상 */
+            color: white; /* 텍스트 색상 변경 */
+            cursor: pointer;
+        }
+        .navbar {
+            height: 80px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    <script>
+        $(document).ready(function() {
+            $('#uploadForm').submit(function(event) {
+                event.preventDefault(); // 폼의 기본 제출 동작을 막음
+
+                // FormData 객체를 사용해 파일 데이터를 보냄
+                var formData = new FormData(this);
+
+                $.ajax({
+                    url: '/api/files/upload',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        // 성공 시 팝업 창을 띄움
+                        alert("업로드 완료! 메시지: " + response);
+                    },
+                    error: function(xhr, status, error) {
+                        // 에러 시 팝업 창을 띄움
+                        alert("파일 업로드 중 오류 발생: " + xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body style="background-color: rgb(245,248,255);">
+
+<nav class="navbar navbar-expand-lg bg-primary fixed-top" data-bs-theme="dark">
+        <span style="width:20%; text-align: center">
+            <a class="navbar-brand" href="#" style="font-size:35px">AZZ</a>
+        </span>
+    <span style="width:15%">
+
+        </span>
+    <span style="width:40%">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" placeholder="Search" style="width:700px" >
+                <button class="btn btn-secondary" type="submit">Search</button>
+            </form>
+        </span >
+    <span style="width:20%;  text-align: right">
+            <img src="image.jpg" style="width: 50px;height: 50px;border-radius: 50%;object-fit: cover;border: 2px solid #ccc;">
+            <span class="badge bg-light">User Name</span>
+        </span>
+    <span style="width:5%">
+        </span>
+</nav>
+
+
+<div style="height:92px"></div>
+<div class="container-fluid">
+    <!--    <div style="height:15px"></div>-->
+    <div class="row no-gutters" >
+        <div class="col-2"></div>
+        <div class="col-2" style="position:fixed">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">
+                    Cras justo odio
+                    <span class="badge bg-primary rounded-pill">14</span>
+                </li>
+                <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
+                    Dapibus ac facilisis in
+                    <span class="badge bg-primary rounded-pill">2</span>
+                </li>
+                <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">1</span>
+                </li><li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
+                Cras justo odio
+                <span class="badge bg-primary rounded-pill">5</span>
+            </li>
+                <li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">
+                    Dapibus ac facilisis in
+                    <span class="badge bg-primary rounded-pill">4</span>
+                </li>
+                <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">9</span>
+                </li>
+                <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">8</span>
+                </li>
+                <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">0</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-8">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">
+                    Cras justo odio
+                    <span class="badge bg-primary rounded-pill">14</span>
+                </li>
+                <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
+                    Dapibus ac facilisis in
+                    <span class="badge bg-primary rounded-pill">2</span>
+                </li>
+                <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">1</span>
+                </li>
+                <li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
+                    Cras justo odio
+                    <span class="badge bg-primary rounded-pill">5</span>
+                </li>
+                <li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">
+                    Dapibus ac facilisis in
+                    <span class="badge bg-primary rounded-pill">4</span>
+                </li>
+                <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">9</span>
+                </li>
+                <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">8</span>
+                </li>
+                <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">0</span>
+                </li>
+                <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">9</span>
+                </li>
+                <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">8</span>
+                </li>
+                <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">0</span>
+                </li>
+                <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">9</span>
+                </li>
+                <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">8</span>
+                </li>
+                <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">0</span>
+                </li>
+                <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">9</span>
+                </li>
+                <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">8</span>
+                </li>
+                <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">0</span>
+                </li>
+                <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">9</span>
+                </li>
+                <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">8</span>
+                </li>
+                <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">0</span>
+                </li>
+                <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">9</span>
+                </li>
+                <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">8</span>
+                </li>
+                <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">0</span>
+                </li>
+
+            </ul>
+        </div><div style="height:10px"></div>
+
+
+
+
+
+
+
+        <!--        세번째 col-->
+        <div class="col-2" style="position:fixed; right:0">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">
+                    Cras justo odio
+                    <span class="badge bg-primary rounded-pill">14</span>
+                </li>
+                <li class="list-group-item list-group-item-secondary d-flex justify-content-between align-items-center">
+                    Dapibus ac facilisis in
+                    <span class="badge bg-primary rounded-pill">2</span>
+                </li>
+                <li class="list-group-item list-group-item-success d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">1</span>
+                </li><li class="list-group-item list-group-item-info d-flex justify-content-between align-items-center">
+                Cras justo odio
+                <span class="badge bg-primary rounded-pill">5</span>
+            </li>
+                <li class="list-group-item list-group-item-warning d-flex justify-content-between align-items-center">
+                    Dapibus ac facilisis in
+                    <span class="badge bg-primary rounded-pill">4</span>
+                </li>
+                <li class="list-group-item list-group-item-danger d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">9</span>
+                </li>
+                <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">8</span>
+                </li>
+                <li class="list-group-item list-group-item-dark d-flex justify-content-between align-items-center">
+                    Morbi leo risus
+                    <span class="badge bg-primary rounded-pill">0</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-2" style="position: fixed; right: 0px; bottom: 10px;">
+            <ul class="list-group">
+                <li class="list-group-item list-group-item-primary d-flex justify-content-between align-items-center">
+                    ✉ Alarm &#128276;
+                    <span class="badge bg-primary rounded-pill">14</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<!--<button type="button" class="btn btn-primary">Primary</button>-->
+<!--<button type="button" class="btn btn-secondary">Secondary</button>-->
+<!--<button type="button" class="btn btn-success">Success</button>-->
+<!--<button type="button" class="btn btn-info">Info</button>-->
+<!--<button type="button" class="btn btn-warning">Warning</button>-->
+<!--<button type="button" class="btn btn-danger">Danger</button>-->
+<!--<button type="button" class="btn btn-light">Light</button>-->
+<!--<button id="exm1" type="button" class="btn btn-dark">Dark</button>-->
+<!--<button id="exm2" type="button" class="btn btn-link">Link</button>-->
+<!--<div class="d-grid gap-2">-->
+<!--    <button id="exm" class="btn btn-lg btn-primary" type="button">Block button</button>-->
+<!--    <button class="btn btn-lg btn-primary" type="button">Block button</button>-->
+<!--</div>-->
+<!--<div class="container">-->
+<!--    <h1 class="mt-5">파일 업로드</h1>-->
+
+<!--    <form id="uploadForm" action="/api/files/upload" method="post" enctype="multipart/form-data">-->
+<!--        <div class="form-group">-->
+<!--            <label for="file">파일 선택:</label>-->
+<!--            <input type="file" class="form-control-file" id="file" name="file" required>-->
+<!--        </div>-->
+<!--        <button type="submit" class="btn btn-primary">업로드</button>-->
+<!--    </form>-->
+<!--</div>-->
+
+
+</body>
+</html>
+
+<!--            <ul class="navbar-nav me-auto">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" href="#">Home-->
+<!--                        <span class="visually-hidden">(current)</span>-->
+<!--                    </a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">Features</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">Pricing</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" href="#">About</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>-->
+<!--                    <div class="dropdown-menu">-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                        <a class="dropdown-item" href="#">Another action</a>-->
+<!--                        <a class="dropdown-item" href="#">Something else here</a>-->
+<!--                        <div class="dropdown-divider"></div>-->
+<!--                        <a class="dropdown-item" href="#">Separated link</a>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--            </ul>-->
