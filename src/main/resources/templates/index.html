@@ -50,11 +50,82 @@
     input.custom-input::placeholder {
       color: rgb(103,176,209); /* placeholder의 글자 색 */
     }
-
     input.custom-input:focus {
       outline-color: rgb(103,176,209); /* 포커스 시 테두리 색상 변경 */
     }
+    #customSelect{
+      border: none;
+      outline: 2px solid transparent; /* 기본적으로 투명 테두리 */
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* 내부 음영 */
+      padding: 5px;
+      font-size: 14px;
+      color: rgb(103,176,209); /* 입력 내용의 글자 색 */
+      transition: outline-color 0.3s ease; /* 테두리 색상 변환 */
+      text-align: center;
+    }
+    #signUpDiv{
+      width:40vw;
+      height:70vh;
+      border: none;
+      outline: 2px solid transparent; /* 기본적으로 투명 테두리 */
+      /*box-shadow: 1px 1px 1px 2px rgba(0, 0, 0, 0.2); !* 내부 음영 *!*/
+      box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+      /*padding: 5px;*/
+      font-size: 14px;
+      color: rgb(103,176,209); /* 입력 내용의 글자 색 */
+      text-align: center;
+    }
   </style>
+  <script>
+    function formatBirthday(input) {
+      // 숫자만 남기기
+      let value = input.value.replace(/\D/g, '');
+      // 최대 길이는 8자리까지만
+      if (value.length > 8) {
+        value = value.slice(0, 8);
+      }
+      // YYYY-MM-DD 형식으로 변환
+      if (value.length > 4) {
+        value = value.slice(0, 4) + '-' + value.slice(4);
+      }
+      if (value.length > 7) {
+        value = value.slice(0, 7) + '-' + value.slice(7);
+      }
+      // 입력 필드에 값 설정
+      input.value = value;
+    }
+    function formatCall(input) {
+      // 숫자만 남기기
+      let value = input.value.replace(/\D/g, '');
+      // 최대 길이는 8자리까지만
+      if (value.length > 11) {
+        value = value.slice(0, 8);
+      }
+      // YYYY-MM-DD 형식으로 변환
+      if (value.length > 3) {
+        value = value.slice(0, 3) + '-' + value.slice(3);
+      }
+      if (value.length > 7) {
+        value = value.slice(0, 7) + '-' + value.slice(7);
+      }
+      // 입력 필드에 값 설정
+      input.value = value;
+    }
+    function handleSelectChange() {
+      var select = document.getElementById("customSelect");
+      var emailInput = document.getElementById("emailInput");
+
+      // 기본 선택값이 아닌 다른 값이 선택되면
+      if (select.value !== "") {
+        // emailInput의 값 지우기 및 비활성화
+        emailInput.value = "";
+        emailInput.disabled = true;
+      } else {
+        // 기본 선택값일 때는 emailInput을 활성화
+        emailInput.disabled = false;
+      }
+    }
+  </script>
 </head>
 
 <body class="index-page">
@@ -182,7 +253,7 @@
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-activity icon"></i></div>
-              <h4><a href="service-details.html" class="stretched-link">Sign Up & In</a></h4>
+              <h4><a href="#call-to-action" class="stretched-link">Sign Up & In</a></h4>
               <p>간단한 정보로 가입 가능합니다. 원한다면 기존 sns 계정으로 시작하세요!</p>
             </div>
           </div><!-- End Service Item -->
@@ -190,7 +261,7 @@
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
-              <h4><a href="service-details.html" class="stretched-link">Create Profile</a></h4>
+              <h4><a href="#call-to-action" class="stretched-link">Create Profile</a></h4>
               <p>나의 프로필을 채워 다른사람들에게 소개해주세요</p>
             </div>
           </div><!-- End Service Item -->
@@ -198,7 +269,7 @@
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
-              <h4><a href="service-details.html" class="stretched-link">Follow & Join</a></h4>
+              <h4><a href="#call-to-action" class="stretched-link">Follow & Join</a></h4>
               <p>관심있는 사람을 follow 하고 원하는 그룹에 join 해서 소식을 받으세요</p>
             </div>
           </div><!-- End Service Item -->
@@ -206,7 +277,7 @@
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-broadcast icon"></i></div>
-              <h4><a href="service-details.html" class="stretched-link">Posting</a></h4>
+              <h4><a href="#call-to-action" class="stretched-link">Posting</a></h4>
               <p>나의 아침 점심 저녁 그리고 하루를 기록하고 지인에게 공유하세요</p>
             </div>
           </div><!-- End Service Item -->
@@ -232,18 +303,18 @@
               <div style="width:70%; height:36vh; background-color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.4);margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-direction: column">
                 <div class="container-fluid">
                   <div class="row mb-3">
-                    <div class="col-3">
-                      <span style="width:14vw; font-size:2.7vw; color:rgb(103,176,209)">ID</span>
+                    <div class="col-3 d-flex align-items-center">
+                      <span style="width:14vw; font-size:2.5vw; color:rgb(103,176,209)">ID</span>
                     </div>
-                    <div class="col-9">
+                    <div class="col-9 mt-2">
                       <input style="width:80%" class="custom-input" type="text" placeholder="example@domain.com">
                     </div>
                   </div>
                   <div class="row mb-4">
                     <div class="col-3">
-                      <span style="width:14vw; font-size:2.7vw; color:rgb(103,176,209)">PW</span>
+                      <span style="width:14vw; font-size:2.5vw; color:rgb(103,176,209)">PW</span>
                     </div>
-                    <div class="col-9">
+                    <div class="col-9 mt-2">
                       <input style="width:80%" class="custom-input" type="password" placeholder="**********">
                     </div>
                   </div>
@@ -269,52 +340,411 @@
     </section><!-- /Call To Action Section -->
 
 <!--     Contact Section -->
-        <section style="height:80vh" id="contact" class="contact section">
+        <section id="contact" class="contact section">
 
           <!-- Section Title -->
-          <div style="height:12%" class="container section-title" data-aos="fade-up">
+          <div class="container section-title" data-aos="fade-up">
             <h2>Sign Up</h2>
+
           </div><!-- End Section Title -->
 
-          <div style="height:100%" class="container" data-aos="fade-up" data-aos-delay="100">
+          <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-            <div class="row gy-4 justify-content-center" style="height:100%">
+            <div class="row d-flex justify-content-center">
 
-              <div class="col-lg-7" style="height:100%">
+              <div class="col-lg-5">
 
-                <div class="info-wrap" style="height:95%">
+                <div class="info-wrap">
+                  <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200" style="height:4vh">
+                  </div>
+<!--                  이름 / 생일-->
                   <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-                    <i class="bi bi-geo-alt flex-shrink-0"></i>
-                    <div>
-                      <h3>Address</h3>
-                      <input  class="custom-input" style="height:4vh; width:13vw" type="text" placeholder="  ">
-                      <button style="">주소찾기</button>
+                    <i class="bi bi-person-circle flex-shrink-0"></i>
+                    <div style="width:100%">
+                      <input  class="custom-input" style="height:4vh; width:48%" type="text" placeholder="Name">
+                      <input oninput="formatBirthday(this)" class="custom-input" style="height:4vh; width:48%" type="text" placeholder="Birth ex)1995-11-17">
                     </div>
-                  </div><!-- End Info Item -->
-
+                  </div>
+<!--                    이메일-->
                   <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-                    <i class="bi bi-telephone flex-shrink-0"></i>
-                    <div>
-                      <h3>Call Us</h3>
-                      <p>+1 5589 55488 55</p>
+                    <i class="bi bi-envelope flex-shrink-0"></i>
+                    <div style="width:100%">
+                      <input  class="custom-input" style="height:4vh; width:50%" type="text" placeholder="this Email is your ID">&nbsp;&nbsp;@&nbsp;
+                      <select id="customSelect" th:onchange="handleSelectChange()" style="height:4vh; width:40%">
+                        <option value="">직접 입력</option>
+                        <option value="naver.com">naver.com</option>
+                        <option value="google.com">google.com</option>
+                        <option value="daum.net">daum.net</option>
+                      </select>
+                      <input style="height:4vh; width:57%; visibility:hidden">
+                      <input id="emailInput" class="mt-1 custom-input" style="height:4vh; width:40%" type="text" placeholder="  ">
+
+
+                    </div>
+                  </div>
+
+
+                  <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
+                    <i class="bi bi-geo-alt flex-shrink-0"></i>
+                    <div class="container-fluid">
+                      <div class="row mb-1">
+                        <div class="col-12 g-0">
+                          <input disabled class="custom-input" style="height:4vh; width:100%" type="text" placeholder="Search를 이용해주세요">
+                        </div>
+                      </div>
+                      <div class="row d-flex">
+                        <div class="col-7 g-0">
+                          <input  class="custom-input" style="height:4vh; width:100%" type="text" placeholder="상세 주소">
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-3">
+                          <button style="text-align: center;height: 4vh; width:100%; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Search</button>
+                        </div>
+                        <div class="col-1">
+                        </div>
+                      </div>
+
+
+
                     </div>
                   </div><!-- End Info Item -->
 
                   <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                    <i class="bi bi-envelope flex-shrink-0"></i>
-                    <div>
-                      <h3>Email Us</h3>
-                      <p>info@example.com</p>
+                    <i class="bi bi-telephone flex-shrink-0"></i>
+                    <div class="container-fluid">
+                      <div class="row">
+                        <div class="col-7 g-0">
+                          <input oninput="formatCall(this)" class="custom-input" style="height:4vh; width:100%" type="text" placeholder="ex) 010-0000-0000">
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-3 mt-1">
+                          <button style="width:100%; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Confirm</button>
+                        </div>
+                        <div class="col-1"></div>
+                      </div>
+
                     </div>
-                  </div><!-- End Info Item -->
+                  </div>
+
+                  <div class="info-item d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="400">
+                      <button style="width:8vw; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Join</button>
+                  </div>
+
+<!--                  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>-->
                 </div>
               </div>
+
 
             </div>
 
           </div>
 
         </section><!-- /Contact Section -->
+
+
+
+
+
+
+
+
+
+
+<!--&lt;!&ndash;     Contact Section &ndash;&gt;-->
+<!--    <section style="height:10vh; padding:3vh" id="contact" class="contact section">-->
+<!--      <div style="height:10vh" class="container section-title" data-aos="fade-up">-->
+<!--        <h2>Sign Up</h2>-->
+<!--      </div>&lt;!&ndash; End Section Title &ndash;&gt;-->
+
+<!--      <div style="height:80vh; background-color: #2e0708" class="container" data-aos="fade-up" data-aos-delay="100">-->
+<!--        <div class="row d-flex justify-content-center align-items-center" style="height:80%; width:40vw">-->
+
+<!--          <div class="col-lg-7" style="height:100%">-->
+<!--            <div class="info-wrap" style="height:100%">-->
+
+<!--              <div class="info-item d-flex container-fluid mt-5" data-aos="fade-up" data-aos-delay="200" style="height:13%">-->
+<!--                <div class="col-1">-->
+<!--                </div>-->
+
+<!--                <div class="col-1 d-flex align-items-center" >-->
+<!--                  <i class="bi bi-person-circle flex-shrink-0"></i>-->
+<!--                </div>-->
+
+<!--                <div class="col-2 d-flex align-items-center">-->
+<!--                  <h3>Name & Birth</h3>-->
+<!--                </div>-->
+
+<!--                <div class="col-6">-->
+<!--                  <div class="row mb-2">-->
+<!--                    <input  class="custom-input" style="height:4vh; width:60%" type="text" placeholder="Name">-->
+<!--                  </div>-->
+<!--                  <div class="row">-->
+<!--                    <input oninput="formatBirthday(this)" class="custom-input" style="height:4vh; width:60%" type="text" placeholder="Birth ex)1995-11-17">-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--                <div class="col-2 d-flex align-items-center">-->
+<!--                </div>-->
+<!--              </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+
+
+<!--              <div class="info-item d-flex container-fluid" data-aos="fade-up" data-aos-delay="200" style="height:15%">-->
+<!--                <div class="col-1">-->
+<!--                </div>-->
+
+<!--                <div class="col-1 d-flex align-items-center" >-->
+<!--                  <i class="bi bi-envelope flex-shrink-0"></i>-->
+<!--                </div>-->
+
+<!--                <div class="col-2 d-flex align-items-center">-->
+<!--                  <h3>Email (ID)</h3>-->
+<!--                </div>-->
+
+<!--                <div class="col-6 mt-2">-->
+<!--                  <div class="row mb-2 d-flex align-items-center" style="width:95%">-->
+<!--                    <input  class="custom-input" style="height:4vh; width:100%" type="text" placeholder="this Email is your ID">-->
+<!--                  </div>-->
+<!--                  <div class="row" style="width:100%">-->
+<!--                    <div class="col-1 mt-1">@</div>-->
+<!--                    <div class="col-6">-->
+<!--                      <input id="emailInput" class="custom-input" style="height:4vh; width:100%" type="text" placeholder="  ">-->
+<!--                    </div>-->
+<!--                    <div class="col-5">-->
+<!--                      <select id="customSelect" th:onchange="handleSelectChange()" style="height:4vh; width:100%">-->
+<!--                        <option value="">직접 입력</option>-->
+<!--                        <option value="naver.com">naver.com</option>-->
+<!--                        <option value="google.com">google.com</option>-->
+<!--                        <option value="daum.net">daum.net</option>-->
+<!--                      </select>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="col-2 d-flex align-items-center">-->
+<!--                </div>-->
+
+<!--              </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+
+
+<!--              <div class="info-item d-flex container-fluid" data-aos="fade-up" data-aos-delay="200" style="height:13%">-->
+<!--                <div class="row" style="width:100%">-->
+<!--                  <div class="col-1">-->
+<!--                  </div>-->
+
+<!--                  <div class="col-1 d-flex align-items-center" >-->
+<!--                    <i class="bi bi-geo-alt flex-shrink-0"></i>-->
+<!--                  </div>-->
+
+<!--                  <div class="col-2 d-flex align-items-center">-->
+<!--                    <h3>Address</h3>-->
+<!--                  </div>-->
+
+<!--                  <div class="col-6">-->
+<!--                    <div class="row mb-2">-->
+<!--                      <input disabled class="custom-input" style="height:4vh; width:100%" type="text" placeholder="Search를 이용해주세요">-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                      <input  class="custom-input" style="height:4vh; width:60%" type="text" placeholder="상세 주소">-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+<!--                  <div class="col-1 d-flex align-items-center">-->
+<!--                    <button style="border-radius: 10px; color: rgb(103,176,209); background-color: white; padding: 10px 20px; border: 1px solid rgb(103,176,209) ;">Search</button>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+
+<!--              <div class="info-item d-flex container-fluid" data-aos="fade-up" data-aos-delay="200" style="height:13%">-->
+<!--                <div class="row" style="width:100%">-->
+<!--                  <div class="col-1">-->
+<!--                  </div>-->
+
+<!--                  <div class="col-1 d-flex align-items-center" >-->
+<!--                    <i class="bi bi-telephone flex-shrink-0"></i>-->
+<!--                  </div>-->
+
+<!--                  <div class="col-2 d-flex align-items-center">-->
+<!--                    <h3>Call</h3>-->
+<!--                  </div>-->
+
+<!--                  <div class="col-6">-->
+<!--                    <div class="row">-->
+
+<!--                      <input oninput="formatCall(this)" class="custom-input" style="height:4vh; width:60%" type="text" placeholder="ex) 010-0000-0000">-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;                        <div class="row">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                          <input  class="custom-input" style="height:4vh; width:11vw" type="text" placeholder="  ">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                  </div>-->
+
+<!--                  <div class="col-1 d-flex align-items-center">-->
+<!--                    <button style="border-radius: 10px; color: rgb(103,176,209); background-color: white; padding: 10px 20px; border: 1px solid rgb(103,176,209) ;">Confirm</button>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+
+
+<!--              <div class="info-item d-flex container-fluid justify-content-center" data-aos="fade-up" data-aos-delay="200">-->
+<!--                <div class="row">-->
+<!--                  <button style="border-radius: 10px; color: rgb(103,176,209); background-color: white; padding: 10px 20px; border: 1px solid rgb(103,176,209) ;">Join</button>-->
+<!--                </div>-->
+<!--              </div>-->
+
+
+<!--            </div>-->
+<!--          </div>-->
+
+<!--        </div>-->
+
+<!--      </div>-->
+
+<!--    </section>&lt;!&ndash; /Contact Section &ndash;&gt;-->
+
+<!--          &lt;!&ndash; Section Title &ndash;&gt;-->
+<!--          <div style="height:10vh" class="container section-title" data-aos="fade-up">-->
+<!--            <h2>Sign Up</h2>-->
+<!--          </div>&lt;!&ndash; End Section Title &ndash;&gt;-->
+
+<!--          <div style="height:80vh; background-color: #2e0708" class="container" data-aos="fade-up" data-aos-delay="100">-->
+<!--            <div class="row d-flex justify-content-center align-items-center" style="height:80%; width:40vw">-->
+
+<!--              <div class="col-lg-7" style="height:100%">-->
+<!--                <div class="info-wrap" style="height:100%">-->
+
+<!--                  <div class="info-item d-flex container-fluid mt-5" data-aos="fade-up" data-aos-delay="200" style="height:13%">-->
+<!--                      <div class="col-1">-->
+<!--                      </div>-->
+
+<!--                      <div class="col-1 d-flex align-items-center" >-->
+<!--                        <i class="bi bi-person-circle flex-shrink-0"></i>-->
+<!--                      </div>-->
+
+<!--                      <div class="col-2 d-flex align-items-center">-->
+<!--                        <h3>Name & Birth</h3>-->
+<!--                      </div>-->
+
+<!--                      <div class="col-6">-->
+<!--                        <div class="row mb-2">-->
+<!--                          <input  class="custom-input" style="height:4vh; width:60%" type="text" placeholder="Name">-->
+<!--                        </div>-->
+<!--                        <div class="row">-->
+<!--                          <input oninput="formatBirthday(this)" class="custom-input" style="height:4vh; width:60%" type="text" placeholder="Birth ex)1995-11-17">-->
+<!--                        </div>-->
+<!--                      </div>-->
+
+<!--                      <div class="col-2 d-flex align-items-center">-->
+<!--                      </div>-->
+<!--                  </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+
+
+<!--                  <div class="info-item d-flex container-fluid" data-aos="fade-up" data-aos-delay="200" style="height:15%">-->
+<!--                      <div class="col-1">-->
+<!--                      </div>-->
+
+<!--                      <div class="col-1 d-flex align-items-center" >-->
+<!--                        <i class="bi bi-envelope flex-shrink-0"></i>-->
+<!--                      </div>-->
+
+<!--                      <div class="col-2 d-flex align-items-center">-->
+<!--                        <h3>Email (ID)</h3>-->
+<!--                      </div>-->
+
+<!--                      <div class="col-6 mt-2">-->
+<!--                        <div class="row mb-2 d-flex align-items-center" style="width:95%">-->
+<!--                          <input  class="custom-input" style="height:4vh; width:100%" type="text" placeholder="this Email is your ID">-->
+<!--                        </div>-->
+<!--                        <div class="row" style="width:100%">-->
+<!--                          <div class="col-1 mt-1">@</div>-->
+<!--                          <div class="col-6">-->
+<!--                            <input id="emailInput" class="custom-input" style="height:4vh; width:100%" type="text" placeholder="  ">-->
+<!--                          </div>-->
+<!--                          <div class="col-5">-->
+<!--                            <select id="customSelect" th:onchange="handleSelectChange()" style="height:4vh; width:100%">-->
+<!--                              <option value="">직접 입력</option>-->
+<!--                              <option value="naver.com">naver.com</option>-->
+<!--                              <option value="google.com">google.com</option>-->
+<!--                              <option value="daum.net">daum.net</option>-->
+<!--                            </select>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      <div class="col-2 d-flex align-items-center">-->
+<!--                      </div>-->
+
+<!--                  </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+
+
+<!--                  <div class="info-item d-flex container-fluid" data-aos="fade-up" data-aos-delay="200" style="height:13%">-->
+<!--                    <div class="row" style="width:100%">-->
+<!--                      <div class="col-1">-->
+<!--                      </div>-->
+
+<!--                      <div class="col-1 d-flex align-items-center" >-->
+<!--                        <i class="bi bi-geo-alt flex-shrink-0"></i>-->
+<!--                      </div>-->
+
+<!--                      <div class="col-2 d-flex align-items-center">-->
+<!--                        <h3>Address</h3>-->
+<!--                      </div>-->
+
+<!--                      <div class="col-6">-->
+<!--                        <div class="row mb-2">-->
+<!--                          <input disabled class="custom-input" style="height:4vh; width:100%" type="text" placeholder="Search를 이용해주세요">-->
+<!--                        </div>-->
+<!--                        <div class="row">-->
+<!--                          <input  class="custom-input" style="height:4vh; width:60%" type="text" placeholder="상세 주소">-->
+<!--                        </div>-->
+<!--                      </div>-->
+
+<!--                      <div class="col-1 d-flex align-items-center">-->
+<!--                        <button style="border-radius: 10px; color: rgb(103,176,209); background-color: white; padding: 10px 20px; border: 1px solid rgb(103,176,209) ;">Search</button>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+
+<!--                  <div class="info-item d-flex container-fluid" data-aos="fade-up" data-aos-delay="200" style="height:13%">-->
+<!--                    <div class="row" style="width:100%">-->
+<!--                      <div class="col-1">-->
+<!--                      </div>-->
+
+<!--                      <div class="col-1 d-flex align-items-center" >-->
+<!--                        <i class="bi bi-telephone flex-shrink-0"></i>-->
+<!--                      </div>-->
+
+<!--                      <div class="col-2 d-flex align-items-center">-->
+<!--                        <h3>Call</h3>-->
+<!--                      </div>-->
+
+<!--                      <div class="col-6">-->
+<!--                        <div class="row">-->
+<!--                          <input oninput="formatCall(this)" class="custom-input" style="height:4vh; width:60%" type="text" placeholder="ex) 010-0000-0000">-->
+<!--                        </div>-->
+<!--&lt;!&ndash;                        <div class="row">&ndash;&gt;-->
+<!--&lt;!&ndash;                          <input  class="custom-input" style="height:4vh; width:11vw" type="text" placeholder="  ">&ndash;&gt;-->
+<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                      </div>-->
+
+<!--                      <div class="col-1 d-flex align-items-center">-->
+<!--                        <button style="border-radius: 10px; color: rgb(103,176,209); background-color: white; padding: 10px 20px; border: 1px solid rgb(103,176,209) ;">Confirm</button>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
+
+
+<!--                  <div class="info-item d-flex container-fluid justify-content-center" data-aos="fade-up" data-aos-delay="200">-->
+<!--                    <div class="row">-->
+<!--                      <button style="border-radius: 10px; color: rgb(103,176,209); background-color: white; padding: 10px 20px; border: 1px solid rgb(103,176,209) ;">Join</button>-->
+<!--                    </div>-->
+<!--                  </div>-->
+
+
+<!--                </div>-->
+<!--              </div>-->
+
+<!--            </div>-->
+
+<!--          </div>-->
+
+
   </main>
 
   <footer id="footer" class="footer dark-background">
