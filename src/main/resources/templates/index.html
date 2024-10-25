@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <title>AZZ - share your day</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
@@ -77,6 +78,10 @@
     }
   </style>
   <script>
+    $(function(){
+      $("#formBt").off("click").on("click",signUpAjax);
+    });
+
     function formatBirthday(input) {
       // 숫자만 남기기
       let value = input.value.replace(/\D/g, '');
@@ -120,11 +125,38 @@
         // emailInput의 값 지우기 및 비활성화
         emailInput.value = "";
         emailInput.disabled = true;
+        $("#emailAfter").val($("#customSelect").val());
+
       } else {
         // 기본 선택값일 때는 emailInput을 활성화
         emailInput.disabled = false;
+        $("#emailAfter").val($("#emailInput").val());
       }
     }
+    function signUpAjax(){
+      var formData = $('form[name="signUpForm"]').serialize();
+
+      // AJAX 요청
+      $.ajax({
+        type: "POST",
+        url: "/login/signUp",
+        data: formData,
+        success: function(response) {
+          alert("Sign up successful!");
+          // 서버 응답 처리 로직
+        },
+        error: function(error) {
+          alert("An error occurred.");
+          // 에러 처리 로직
+        }
+      });
+    }
+    // function combineEmail(){
+    //   let email1 = $("#emailBefore").val;
+    //   let email2 = $("#emailInputl").val;
+    //
+    //   $("#emailAfter").val( email1 + "@" + email2);
+    // }
   </script>
 </head>
 
@@ -353,7 +385,7 @@
             <div class="row d-flex justify-content-center">
 
               <div class="col-lg-5">
-
+                <form name="signUpForm">
                 <div class="info-wrap">
                   <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200" style="height:4vh">
                   </div>
@@ -361,51 +393,45 @@
                   <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
                     <i class="bi bi-person-circle flex-shrink-0"></i>
                     <div style="width:100%">
-                      <input  class="custom-input" style="height:4vh; width:48%" type="text" placeholder="Name">
-                      <input oninput="formatBirthday(this)" class="custom-input" style="height:4vh; width:48%" type="text" placeholder="Birth ex)1995-11-17">
+                      <input name="name" class="custom-input" style="height:4vh; width:48%" type="text" placeholder="Name">
+                      <input name="birth" oninput="formatBirthday(this)" class="custom-input" style="height:4vh; width:48%" type="text" placeholder="Birth ex)1995-11-17">
                     </div>
                   </div>
 <!--                    이메일-->
                   <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
                     <i class="bi bi-envelope flex-shrink-0"></i>
                     <div style="width:100%">
-                      <input  class="custom-input" style="height:4vh; width:50%" type="text" placeholder="this Email is your ID">&nbsp;&nbsp;@&nbsp;
+                      <input id="emailBefore" class="custom-input" style="height:4vh; width:50%" type="text" placeholder="this Email is your ID">&nbsp;&nbsp;@&nbsp;
                       <select id="customSelect" th:onchange="handleSelectChange()" style="height:4vh; width:40%">
                         <option value="">직접 입력</option>
                         <option value="naver.com">naver.com</option>
                         <option value="google.com">google.com</option>
                         <option value="daum.net">daum.net</option>
                       </select>
-                      <input style="height:4vh; width:57%; visibility:hidden">
-                      <input id="emailInput" class="mt-1 custom-input" style="height:4vh; width:40%" type="text" placeholder="  ">
-
-
+                      <input id="emailAfter" name="emailAfter" style="height:4vh; width:57%;">
+                      <input th:oninput="handleSelectChange()" id="emailInput" class="mt-1 custom-input" style="height:4vh; width:40%" type="text" placeholder="  ">
                     </div>
                   </div>
-
 
                   <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
                     <i class="bi bi-geo-alt flex-shrink-0"></i>
                     <div class="container-fluid">
                       <div class="row mb-1">
                         <div class="col-12 g-0">
-                          <input disabled class="custom-input" style="height:4vh; width:100%" type="text" placeholder="Search를 이용해주세요">
+                          <input name="addressMain" disabled class="custom-input" style="height:4vh; width:100%" type="text" placeholder="Search를 이용해주세요">
                         </div>
                       </div>
                       <div class="row d-flex">
                         <div class="col-7 g-0">
-                          <input  class="custom-input" style="height:4vh; width:100%" type="text" placeholder="상세 주소">
+                          <input name="addressSub" class="custom-input" style="height:4vh; width:100%" type="text" placeholder="상세 주소">
                         </div>
                         <div class="col-1"></div>
                         <div class="col-3">
-                          <button style="text-align: center;height: 4vh; width:100%; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Search</button>
+                          <button type="button" style="text-align: center;height: 4vh; width:100%; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Search</button>
                         </div>
                         <div class="col-1">
                         </div>
                       </div>
-
-
-
                     </div>
                   </div><!-- End Info Item -->
 
@@ -414,335 +440,27 @@
                     <div class="container-fluid">
                       <div class="row">
                         <div class="col-7 g-0">
-                          <input oninput="formatCall(this)" class="custom-input" style="height:4vh; width:100%" type="text" placeholder="ex) 010-0000-0000">
+                          <input name="phone" oninput="formatCall(this)" class="custom-input" style="height:4vh; width:100%" type="text" placeholder="ex) 010-0000-0000">
                         </div>
                         <div class="col-1"></div>
                         <div class="col-3 mt-1">
-                          <button style="width:100%; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Confirm</button>
+                          <button type="button" style="width:100%; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Confirm</button>
                         </div>
                         <div class="col-1"></div>
                       </div>
-
                     </div>
                   </div>
-
                   <div class="info-item d-flex justify-content-center align-items-center" data-aos="fade-up" data-aos-delay="400">
-                      <button style="width:8vw; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Join</button>
+                      <button type="button" class="formBt formSendBt" style="width:8vw; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Join</button>
                   </div>
-
-<!--                  <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>-->
                 </div>
+                </form>
               </div>
-
-
             </div>
-
           </div>
 
         </section><!-- /Contact Section -->
 
-
-
-
-
-
-
-
-
-
-<!--&lt;!&ndash;     Contact Section &ndash;&gt;-->
-<!--    <section style="height:10vh; padding:3vh" id="contact" class="contact section">-->
-<!--      <div style="height:10vh" class="container section-title" data-aos="fade-up">-->
-<!--        <h2>Sign Up</h2>-->
-<!--      </div>&lt;!&ndash; End Section Title &ndash;&gt;-->
-
-<!--      <div style="height:80vh; background-color: #2e0708" class="container" data-aos="fade-up" data-aos-delay="100">-->
-<!--        <div class="row d-flex justify-content-center align-items-center" style="height:80%; width:40vw">-->
-
-<!--          <div class="col-lg-7" style="height:100%">-->
-<!--            <div class="info-wrap" style="height:100%">-->
-
-<!--              <div class="info-item d-flex container-fluid mt-5" data-aos="fade-up" data-aos-delay="200" style="height:13%">-->
-<!--                <div class="col-1">-->
-<!--                </div>-->
-
-<!--                <div class="col-1 d-flex align-items-center" >-->
-<!--                  <i class="bi bi-person-circle flex-shrink-0"></i>-->
-<!--                </div>-->
-
-<!--                <div class="col-2 d-flex align-items-center">-->
-<!--                  <h3>Name & Birth</h3>-->
-<!--                </div>-->
-
-<!--                <div class="col-6">-->
-<!--                  <div class="row mb-2">-->
-<!--                    <input  class="custom-input" style="height:4vh; width:60%" type="text" placeholder="Name">-->
-<!--                  </div>-->
-<!--                  <div class="row">-->
-<!--                    <input oninput="formatBirthday(this)" class="custom-input" style="height:4vh; width:60%" type="text" placeholder="Birth ex)1995-11-17">-->
-<!--                  </div>-->
-<!--                </div>-->
-
-<!--                <div class="col-2 d-flex align-items-center">-->
-<!--                </div>-->
-<!--              </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
-
-
-<!--              <div class="info-item d-flex container-fluid" data-aos="fade-up" data-aos-delay="200" style="height:15%">-->
-<!--                <div class="col-1">-->
-<!--                </div>-->
-
-<!--                <div class="col-1 d-flex align-items-center" >-->
-<!--                  <i class="bi bi-envelope flex-shrink-0"></i>-->
-<!--                </div>-->
-
-<!--                <div class="col-2 d-flex align-items-center">-->
-<!--                  <h3>Email (ID)</h3>-->
-<!--                </div>-->
-
-<!--                <div class="col-6 mt-2">-->
-<!--                  <div class="row mb-2 d-flex align-items-center" style="width:95%">-->
-<!--                    <input  class="custom-input" style="height:4vh; width:100%" type="text" placeholder="this Email is your ID">-->
-<!--                  </div>-->
-<!--                  <div class="row" style="width:100%">-->
-<!--                    <div class="col-1 mt-1">@</div>-->
-<!--                    <div class="col-6">-->
-<!--                      <input id="emailInput" class="custom-input" style="height:4vh; width:100%" type="text" placeholder="  ">-->
-<!--                    </div>-->
-<!--                    <div class="col-5">-->
-<!--                      <select id="customSelect" th:onchange="handleSelectChange()" style="height:4vh; width:100%">-->
-<!--                        <option value="">직접 입력</option>-->
-<!--                        <option value="naver.com">naver.com</option>-->
-<!--                        <option value="google.com">google.com</option>-->
-<!--                        <option value="daum.net">daum.net</option>-->
-<!--                      </select>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--                <div class="col-2 d-flex align-items-center">-->
-<!--                </div>-->
-
-<!--              </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
-
-
-<!--              <div class="info-item d-flex container-fluid" data-aos="fade-up" data-aos-delay="200" style="height:13%">-->
-<!--                <div class="row" style="width:100%">-->
-<!--                  <div class="col-1">-->
-<!--                  </div>-->
-
-<!--                  <div class="col-1 d-flex align-items-center" >-->
-<!--                    <i class="bi bi-geo-alt flex-shrink-0"></i>-->
-<!--                  </div>-->
-
-<!--                  <div class="col-2 d-flex align-items-center">-->
-<!--                    <h3>Address</h3>-->
-<!--                  </div>-->
-
-<!--                  <div class="col-6">-->
-<!--                    <div class="row mb-2">-->
-<!--                      <input disabled class="custom-input" style="height:4vh; width:100%" type="text" placeholder="Search를 이용해주세요">-->
-<!--                    </div>-->
-<!--                    <div class="row">-->
-<!--                      <input  class="custom-input" style="height:4vh; width:60%" type="text" placeholder="상세 주소">-->
-<!--                    </div>-->
-<!--                  </div>-->
-
-<!--                  <div class="col-1 d-flex align-items-center">-->
-<!--                    <button style="border-radius: 10px; color: rgb(103,176,209); background-color: white; padding: 10px 20px; border: 1px solid rgb(103,176,209) ;">Search</button>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
-
-<!--              <div class="info-item d-flex container-fluid" data-aos="fade-up" data-aos-delay="200" style="height:13%">-->
-<!--                <div class="row" style="width:100%">-->
-<!--                  <div class="col-1">-->
-<!--                  </div>-->
-
-<!--                  <div class="col-1 d-flex align-items-center" >-->
-<!--                    <i class="bi bi-telephone flex-shrink-0"></i>-->
-<!--                  </div>-->
-
-<!--                  <div class="col-2 d-flex align-items-center">-->
-<!--                    <h3>Call</h3>-->
-<!--                  </div>-->
-
-<!--                  <div class="col-6">-->
-<!--                    <div class="row">-->
-
-<!--                      <input oninput="formatCall(this)" class="custom-input" style="height:4vh; width:60%" type="text" placeholder="ex) 010-0000-0000">-->
-<!--                    </div>-->
-<!--                    &lt;!&ndash;                        <div class="row">&ndash;&gt;-->
-<!--                    &lt;!&ndash;                          <input  class="custom-input" style="height:4vh; width:11vw" type="text" placeholder="  ">&ndash;&gt;-->
-<!--                    &lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--                  </div>-->
-
-<!--                  <div class="col-1 d-flex align-items-center">-->
-<!--                    <button style="border-radius: 10px; color: rgb(103,176,209); background-color: white; padding: 10px 20px; border: 1px solid rgb(103,176,209) ;">Confirm</button>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
-
-
-<!--              <div class="info-item d-flex container-fluid justify-content-center" data-aos="fade-up" data-aos-delay="200">-->
-<!--                <div class="row">-->
-<!--                  <button style="border-radius: 10px; color: rgb(103,176,209); background-color: white; padding: 10px 20px; border: 1px solid rgb(103,176,209) ;">Join</button>-->
-<!--                </div>-->
-<!--              </div>-->
-
-
-<!--            </div>-->
-<!--          </div>-->
-
-<!--        </div>-->
-
-<!--      </div>-->
-
-<!--    </section>&lt;!&ndash; /Contact Section &ndash;&gt;-->
-
-<!--          &lt;!&ndash; Section Title &ndash;&gt;-->
-<!--          <div style="height:10vh" class="container section-title" data-aos="fade-up">-->
-<!--            <h2>Sign Up</h2>-->
-<!--          </div>&lt;!&ndash; End Section Title &ndash;&gt;-->
-
-<!--          <div style="height:80vh; background-color: #2e0708" class="container" data-aos="fade-up" data-aos-delay="100">-->
-<!--            <div class="row d-flex justify-content-center align-items-center" style="height:80%; width:40vw">-->
-
-<!--              <div class="col-lg-7" style="height:100%">-->
-<!--                <div class="info-wrap" style="height:100%">-->
-
-<!--                  <div class="info-item d-flex container-fluid mt-5" data-aos="fade-up" data-aos-delay="200" style="height:13%">-->
-<!--                      <div class="col-1">-->
-<!--                      </div>-->
-
-<!--                      <div class="col-1 d-flex align-items-center" >-->
-<!--                        <i class="bi bi-person-circle flex-shrink-0"></i>-->
-<!--                      </div>-->
-
-<!--                      <div class="col-2 d-flex align-items-center">-->
-<!--                        <h3>Name & Birth</h3>-->
-<!--                      </div>-->
-
-<!--                      <div class="col-6">-->
-<!--                        <div class="row mb-2">-->
-<!--                          <input  class="custom-input" style="height:4vh; width:60%" type="text" placeholder="Name">-->
-<!--                        </div>-->
-<!--                        <div class="row">-->
-<!--                          <input oninput="formatBirthday(this)" class="custom-input" style="height:4vh; width:60%" type="text" placeholder="Birth ex)1995-11-17">-->
-<!--                        </div>-->
-<!--                      </div>-->
-
-<!--                      <div class="col-2 d-flex align-items-center">-->
-<!--                      </div>-->
-<!--                  </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
-
-
-<!--                  <div class="info-item d-flex container-fluid" data-aos="fade-up" data-aos-delay="200" style="height:15%">-->
-<!--                      <div class="col-1">-->
-<!--                      </div>-->
-
-<!--                      <div class="col-1 d-flex align-items-center" >-->
-<!--                        <i class="bi bi-envelope flex-shrink-0"></i>-->
-<!--                      </div>-->
-
-<!--                      <div class="col-2 d-flex align-items-center">-->
-<!--                        <h3>Email (ID)</h3>-->
-<!--                      </div>-->
-
-<!--                      <div class="col-6 mt-2">-->
-<!--                        <div class="row mb-2 d-flex align-items-center" style="width:95%">-->
-<!--                          <input  class="custom-input" style="height:4vh; width:100%" type="text" placeholder="this Email is your ID">-->
-<!--                        </div>-->
-<!--                        <div class="row" style="width:100%">-->
-<!--                          <div class="col-1 mt-1">@</div>-->
-<!--                          <div class="col-6">-->
-<!--                            <input id="emailInput" class="custom-input" style="height:4vh; width:100%" type="text" placeholder="  ">-->
-<!--                          </div>-->
-<!--                          <div class="col-5">-->
-<!--                            <select id="customSelect" th:onchange="handleSelectChange()" style="height:4vh; width:100%">-->
-<!--                              <option value="">직접 입력</option>-->
-<!--                              <option value="naver.com">naver.com</option>-->
-<!--                              <option value="google.com">google.com</option>-->
-<!--                              <option value="daum.net">daum.net</option>-->
-<!--                            </select>-->
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      <div class="col-2 d-flex align-items-center">-->
-<!--                      </div>-->
-
-<!--                  </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
-
-
-<!--                  <div class="info-item d-flex container-fluid" data-aos="fade-up" data-aos-delay="200" style="height:13%">-->
-<!--                    <div class="row" style="width:100%">-->
-<!--                      <div class="col-1">-->
-<!--                      </div>-->
-
-<!--                      <div class="col-1 d-flex align-items-center" >-->
-<!--                        <i class="bi bi-geo-alt flex-shrink-0"></i>-->
-<!--                      </div>-->
-
-<!--                      <div class="col-2 d-flex align-items-center">-->
-<!--                        <h3>Address</h3>-->
-<!--                      </div>-->
-
-<!--                      <div class="col-6">-->
-<!--                        <div class="row mb-2">-->
-<!--                          <input disabled class="custom-input" style="height:4vh; width:100%" type="text" placeholder="Search를 이용해주세요">-->
-<!--                        </div>-->
-<!--                        <div class="row">-->
-<!--                          <input  class="custom-input" style="height:4vh; width:60%" type="text" placeholder="상세 주소">-->
-<!--                        </div>-->
-<!--                      </div>-->
-
-<!--                      <div class="col-1 d-flex align-items-center">-->
-<!--                        <button style="border-radius: 10px; color: rgb(103,176,209); background-color: white; padding: 10px 20px; border: 1px solid rgb(103,176,209) ;">Search</button>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
-
-<!--                  <div class="info-item d-flex container-fluid" data-aos="fade-up" data-aos-delay="200" style="height:13%">-->
-<!--                    <div class="row" style="width:100%">-->
-<!--                      <div class="col-1">-->
-<!--                      </div>-->
-
-<!--                      <div class="col-1 d-flex align-items-center" >-->
-<!--                        <i class="bi bi-telephone flex-shrink-0"></i>-->
-<!--                      </div>-->
-
-<!--                      <div class="col-2 d-flex align-items-center">-->
-<!--                        <h3>Call</h3>-->
-<!--                      </div>-->
-
-<!--                      <div class="col-6">-->
-<!--                        <div class="row">-->
-<!--                          <input oninput="formatCall(this)" class="custom-input" style="height:4vh; width:60%" type="text" placeholder="ex) 010-0000-0000">-->
-<!--                        </div>-->
-<!--&lt;!&ndash;                        <div class="row">&ndash;&gt;-->
-<!--&lt;!&ndash;                          <input  class="custom-input" style="height:4vh; width:11vw" type="text" placeholder="  ">&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--                      </div>-->
-
-<!--                      <div class="col-1 d-flex align-items-center">-->
-<!--                        <button style="border-radius: 10px; color: rgb(103,176,209); background-color: white; padding: 10px 20px; border: 1px solid rgb(103,176,209) ;">Confirm</button>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>&lt;!&ndash; End Info Item &ndash;&gt;-->
-
-
-<!--                  <div class="info-item d-flex container-fluid justify-content-center" data-aos="fade-up" data-aos-delay="200">-->
-<!--                    <div class="row">-->
-<!--                      <button style="border-radius: 10px; color: rgb(103,176,209); background-color: white; padding: 10px 20px; border: 1px solid rgb(103,176,209) ;">Join</button>-->
-<!--                    </div>-->
-<!--                  </div>-->
-
-
-<!--                </div>-->
-<!--              </div>-->
-
-<!--            </div>-->
-
-<!--          </div>-->
 
 
   </main>
