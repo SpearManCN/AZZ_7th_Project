@@ -79,9 +79,10 @@
     }
   </style>
   <script>
-    $(function(){
-      $("#formBt").off("click").on("click",signUpAjax);
-    });
+    function sendSignInForm(){
+      const form = document.getElementById('signInForm');
+      form.submit();
+    }
 
     function formatBirthday(input) {
       // 숫자만 남기기
@@ -223,8 +224,8 @@
         <ul>
           <li><a href="#hero" class="active">Home</a></li>
           <li><a href="#about">About</a></li>
-          <li><a href="#call-to-action">Sign In</a></li>
-          <li><a href="#contact">Sign Up</a></li>
+          <li><a href="#signIn">Sign In</a></li>
+          <li><a href="#signUp">Sign Up</a></li>
 <!--          <li><a href="#team">Team</a></li>-->
 <!--          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>-->
 <!--            <ul>-->
@@ -333,7 +334,7 @@
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-activity icon"></i></div>
-              <h4><a href="#call-to-action" class="stretched-link">Sign Up & In</a></h4>
+              <h4><a href="#signIn" class="stretched-link">Sign Up & In</a></h4>
               <p>간단한 정보로 가입 가능합니다. 원한다면 기존 sns 계정으로 시작하세요!</p>
             </div>
           </div><!-- End Service Item -->
@@ -341,7 +342,7 @@
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
-              <h4><a href="#call-to-action" class="stretched-link">Create Profile</a></h4>
+              <h4><a href="#signIn" class="stretched-link">Create Profile</a></h4>
               <p>나의 프로필을 채워 다른사람들에게 소개해주세요</p>
             </div>
           </div><!-- End Service Item -->
@@ -349,7 +350,7 @@
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
-              <h4><a href="#call-to-action" class="stretched-link">Follow & Join</a></h4>
+              <h4><a href="#singIn" class="stretched-link">Follow & Join</a></h4>
               <p>관심있는 사람을 follow 하고 원하는 그룹에 join 해서 소식을 받으세요</p>
             </div>
           </div><!-- End Service Item -->
@@ -357,7 +358,7 @@
           <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
             <div class="service-item position-relative">
               <div class="icon"><i class="bi bi-broadcast icon"></i></div>
-              <h4><a href="#call-to-action" class="stretched-link">Posting</a></h4>
+              <h4><a href="#signIn" class="stretched-link">Posting</a></h4>
               <p>나의 아침 점심 저녁 그리고 하루를 기록하고 지인에게 공유하세요</p>
             </div>
           </div><!-- End Service Item -->
@@ -369,7 +370,7 @@
     </section><!-- /Services Section -->
 
     <!-- Call To Action Section -->
-    <section id="call-to-action" class="call-to-action section accent-background" style="height:100vh;">
+    <section id="signIn" class="call-to-action section accent-background" style="height:100vh;">
 
       <img src="assets/img/cta-bg.jpg" alt="">
 
@@ -377,17 +378,19 @@
 
         <div class="row justify-content-center" data-aos="zoom-in" data-aos-delay="100">
           <div class="col-xl-10">
+            <form id="signInForm" action="/signIn" method="post">
             <div class="text-center" style="margin-top: 6vh;">
               <h2>Sign In</h2>
               <div style="height:3vh"></div>
               <div style="width:70%; height:36vh; background-color: white; box-shadow: 0 4px 8px rgba(0,0,0,0.4);margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-direction: column">
+
                 <div class="container-fluid">
                   <div class="row mb-3">
                     <div class="col-3 d-flex align-items-center">
                       <span style="width:14vw; font-size:2.5vw; color:rgb(103,176,209)">ID</span>
                     </div>
                     <div class="col-9 mt-2">
-                      <input style="width:80%" class="custom-input" type="text" placeholder="example@domain.com">
+                      <input name="username" style="width:80%" class="custom-input" type="text" placeholder="example@domain.com">
                     </div>
                   </div>
                   <div class="row mb-4">
@@ -395,7 +398,7 @@
                       <span style="width:14vw; font-size:2.5vw; color:rgb(103,176,209)">PW</span>
                     </div>
                     <div class="col-9 mt-2">
-                      <input style="width:80%" class="custom-input" type="password" placeholder="**********">
+                      <input name="password" style="width:80%" class="custom-input" type="password" placeholder="**********">
                     </div>
                   </div>
                   <div class="row mb-2">
@@ -410,9 +413,12 @@
                     </div>
                   </div>
                 </div>
+
               </div>
-              <a class="cta-btn" href="#">Enter</a>
+
+              <button th:onclick="sendSignInForm()" type="button" class="cta-btn" style="background-color: transparent">Enter</button>
             </div>
+            </form>
           </div>
         </div>
       </div>
@@ -420,7 +426,7 @@
     </section><!-- /Call To Action Section -->
 
 <!--     Contact Section -->
-        <section id="contact" class="contact section">
+        <section id="signUp" class="contact section">
 
           <!-- Section Title -->
           <div class="container section-title" data-aos="fade-up">
@@ -508,13 +514,6 @@
           </div>
 
         </section><!-- /Contact Section -->
-    <input type="text" id="sample4_postcode" placeholder="우편번호">
-    <input type="button" onclick="sample4_execDaumPostcode()" value="우편번호 찾기"><br>
-    <input type="text" id="sample4_roadAddress" placeholder="도로명주소">
-    <input type="text" id="sample4_jibunAddress" placeholder="지번주소">
-    <span id="guide" style="color:#999;display:none"></span>
-    <input type="text" id="sample4_detailAddress" placeholder="상세주소">
-    <input type="text" id="sample4_extraAddress" placeholder="참고항목">
 
 
   </main>
