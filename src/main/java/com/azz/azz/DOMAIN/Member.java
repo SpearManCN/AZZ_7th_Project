@@ -1,22 +1,20 @@
 package com.azz.azz.DOMAIN;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
 public class Member{
     @Id
-    @GeneratedValue
-    private int no;
-    private int social; // 0 이면 일반, 1은 카카오 ...
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer no;
+    private Integer social; // 0 이면 일반, 1은 카카오 ...
     private String name;
     private String birth;
     private String password;
-    private String emailBefore;
-    private String emailAfter;
+    private String emailLeft;
+    private String emailRight;
     private String phone;
     private String addressMain;
     private String addressSub;
