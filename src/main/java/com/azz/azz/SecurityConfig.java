@@ -14,14 +14,14 @@ public class SecurityConfig{
         http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/","/signIn","/assets/**").permitAll() // 누구나 접근 가능
+                        .requestMatchers("/login/**","/assets/**").permitAll() // 누구나 접근 가능
                         .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
                 )
                 .formLogin(form -> form // 로그인 설정
                         .loginPage("/#signIn") // 커스텀 로그인 페이지 경로
                         .loginProcessingUrl("/signIn")
                         .defaultSuccessUrl("/home")
-                        .failureUrl("/")
+                        .failureUrl("/#signIn?error=true")
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -33,3 +33,4 @@ public class SecurityConfig{
         return http.build();
     }
 }
+

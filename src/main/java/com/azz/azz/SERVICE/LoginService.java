@@ -21,4 +21,20 @@ public class LoginService {
         }
         return 3; // 저장 성공시 3 반환
     }
+
+    public int confirmPhone(Member member){
+        if(loginRepository.findByPhone(member.getPhone())==null){
+            return 1; // 해당 번호가 없음
+        }else{
+            return 0; // 중복된 번호가 이미 존재.
+        }
+    }
+    public int confirmEmail(Member member){
+        if(loginRepository.findByEmailLeftAndEmailRight(member.getEmailLeft(), member.getEmailRight())==null){
+            return 1; // 해당 메일이 없음
+        }else{
+            return 0; // 중복된 메일이 이미 존재.
+        }
+    }
+
 }

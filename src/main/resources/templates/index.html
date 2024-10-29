@@ -79,6 +79,10 @@
     }
   </style>
   <script>
+    var emailFlag = false;
+    var addressFlag = false;
+    var phoneFlag = false;
+
     function sendSignInForm(){
       const form = document.getElementById('signInForm');
       form.submit();
@@ -105,19 +109,26 @@
       // 숫자만 남기기
       let value = input.value.replace(/\D/g, '');
       // 최대 길이는 8자리까지만
-      if (value.length > 11) {
-        value = value.slice(0, 11);
+      if (value.length > 8) {
+        value = value.slice(0, 8);
       }
       // YYYY-MM-DD 형식으로 변환
-      if (value.length > 3) {
-        value = value.slice(0, 3) + '-' + value.slice(3);
-      }
-      if (value.length > 8) {
-        value = value.slice(0, 8) + '-' + value.slice(8);
+      if (value.length > 4) {
+        value = value.slice(0, 4) + '-' + value.slice(4);
       }
       // 입력 필드에 값 설정
       input.value = value;
     }
+
+    function formatPassword(){
+      if($("[name=password]").val()==$("[name=password2]").val()){
+        $("#passwordCompare").attr("hidden", true);
+      }else{
+        $("#passwordCompare").attr("hidden", false);
+      }
+
+    }
+
     function handleSelectChange() {
       var select = document.getElementById("customSelect");
       var emailInput = document.getElementById("emailInput");
@@ -127,12 +138,12 @@
         // emailInput의 값 지우기 및 비활성화
         emailInput.value = "";
         emailInput.disabled = true;
-        $("#emailAfter").val($("#customSelect").val());
+        $("#emailRight").val($("#customSelect").val());
 
       } else {
         // 기본 선택값일 때는 emailInput을 활성화
         emailInput.disabled = false;
-        $("#emailAfter").val($("#emailInput").val());
+        $("#emailRight").val($("#emailInput").val());
       }
     }
     function signUpAjax(){
@@ -180,31 +191,82 @@
           }
 
           $("[name=addressMain]").val(roadAddr);
+          addressFlag=true;
 
-          // 참고항목 문자열이 있을 경우 해당 필드에 넣는다.
-          // if(roadAddr !== ''){
-          //   document.getElementById("sample4_extraAddress").value = extraRoadAddr;
-          // } else {
-          //   document.getElementById("sample4_extraAddress").value = '';
-          // }
-
-          var guideTextBox = document.getElementById("guide");
-          // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
-          if(data.autoRoadAddress) {
-            var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
-            guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
-            guideTextBox.style.display = 'block';
-
-          } else if(data.autoJibunAddress) {
-            var expJibunAddr = data.autoJibunAddress;
-            guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
-            guideTextBox.style.display = 'block';
-          } else {
-            guideTextBox.innerHTML = '';
-            guideTextBox.style.display = 'none';
-          }
         }
       }).open();
+    }
+
+// 유효성 검사 및 중복 확인
+
+    function confirmPhone(){
+      if($("[name=phone]").val().length!=9){
+        alert("8자리 숫자를 입력해주세요.");
+        $("[name=phone]").val("");
+        return;
+      }
+      var formData = $('form[name="signUpForm"]').serialize();
+
+      // AJAX 요청
+      $.ajax({
+        type: "POST",
+        url: "/login/confirmPhone",
+        data: formData,
+        success: function(response) {
+          if(response==1){
+            if(confirm("사용 가능한 번호 입니다. 사용 하시겠습니까?")){
+              $("[name=phone]").prop("disabled",true);
+              phoneFlag=true;
+            }else{
+              $("[name=phone]").val("");
+            }
+          }else{
+            alert("사용 불가능한 번호 입니다.");
+            $("[name=phone]").val("");
+          }
+          // 서버 응답 처리 로직
+        },
+        error: function(error) {
+          alert("An error occurred.");
+          // 에러 처리 로직
+        }
+      });
+    }
+
+    function confirmEmail(){
+      if($("[name=emailLeft]").val().length==0 || $("[name=emailRight]").val().length==0){
+        alert("Email을 입력해주세요.");
+        return;
+      }
+      var formData = $('form[name="signUpForm"]').serialize();
+
+      // AJAX 요청
+      $.ajax({
+        type: "POST",
+        url: "/login/confirmEmail",
+        data: formData,
+        success: function(response) {
+          if(response==1){
+            if(confirm("사용 가능한 메일 입니다. 사용 하시겠습니까?")){
+              $("[name=emailLeft]").prop("disabled",true);
+              $("[id=customSelect]").prop("disabled",true);
+              $("[id=emailInput]").prop("disabled",true);
+              emailFlag=true;
+            }else{
+              $("[name=emailLeft]").val("");
+            }
+          }else{
+            alert("사용 불가능한 메일 입니다.");
+            $("[name=emailLeft]").val("");
+            $("[name=emailRight]").val("");
+          }
+          // 서버 응답 처리 로직
+        },
+        error: function(error) {
+          alert("An error occurred.");
+          // 에러 처리 로직
+        }
+      });
     }
   </script>
 </head>
@@ -226,25 +288,6 @@
           <li><a href="#about">About</a></li>
           <li><a href="#signIn">Sign In</a></li>
           <li><a href="#signUp">Sign Up</a></li>
-<!--          <li><a href="#team">Team</a></li>-->
-<!--          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>-->
-<!--            <ul>-->
-<!--              <li><a href="#">Dropdown 1</a></li>-->
-<!--              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>-->
-<!--                <ul>-->
-<!--                  <li><a href="#">Deep Dropdown 1</a></li>-->
-<!--                  <li><a href="#">Deep Dropdown 2</a></li>-->
-<!--                  <li><a href="#">Deep Dropdown 3</a></li>-->
-<!--                  <li><a href="#">Deep Dropdown 4</a></li>-->
-<!--                  <li><a href="#">Deep Dropdown 5</a></li>-->
-<!--                </ul>-->
-<!--              </li>-->
-<!--              <li><a href="#">Dropdown 2</a></li>-->
-<!--              <li><a href="#">Dropdown 3</a></li>-->
-<!--              <li><a href="#">Dropdown 4</a></li>-->
-<!--            </ul>-->
-<!--          </li>-->
-<!--          <li><a href="#contact">Contact</a></li>-->
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
@@ -441,8 +484,8 @@
               <div class="col-lg-5">
                 <form name="signUpForm">
                 <div class="info-wrap">
-                  <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200" style="height:4vh">
-                  </div>
+<!--                  <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200" style="height:4vh">-->
+<!--                  </div>-->
 <!--                  이름 / 생일-->
                   <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
                     <i class="bi bi-person-circle flex-shrink-0"></i>
@@ -455,16 +498,27 @@
                   <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
                     <i class="bi bi-envelope flex-shrink-0"></i>
                     <div style="width:100%">
-                      <input id="emailBefore" class="custom-input" style="height:4vh; width:50%" type="text" placeholder="this Email is your ID">&nbsp;&nbsp;@&nbsp;
+                      <input name="emailLeft" class="custom-input" style="height:4vh; width:50%" type="text" placeholder="this Email is your ID">&nbsp;&nbsp;@&nbsp;
                       <select id="customSelect" th:onchange="handleSelectChange()" style="height:4vh; width:40%">
                         <option value="">직접 입력</option>
                         <option value="naver.com">naver.com</option>
                         <option value="google.com">google.com</option>
                         <option value="daum.net">daum.net</option>
                       </select>
-                      <input id="emailAfter" name="emailAfter" style="height:4vh; width:57%;">
+                      <input id="emailRight" name="emailRight" style="visibility: hidden; height:4vh; width:30%;">
+                      <button th:onclick="confirmEmail()" type="button" style=" height:3vh; width:26%; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Confirm</button>
                       <input th:oninput="handleSelectChange()" id="emailInput" class="mt-1 custom-input" style="height:4vh; width:40%" type="text" placeholder="  ">
                     </div>
+                  </div>
+<!-- 비밀번호-->
+                  <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
+                    <i class="bi bi-p-circle flex-shrink-0"></i>
+                    <div style="width:100%">
+                      <input name="password" oninput="formatPassword()" class="custom-input" style="height:4vh; width:48%" type="text" placeholder="4~10자리 비밀번호">
+                      <input name="password2" oninput="formatPassword()" class="custom-input" style="height:4vh; width:48%" type="text" placeholder="비밀번호 재입력">
+                      <span hidden id="passwordCompare" style="font-size:10px; width:50%">비밀번호가 서로 다릅니다</span>
+                    </div>
+
                   </div>
 
                   <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
@@ -494,11 +548,11 @@
                     <div class="container-fluid">
                       <div class="row">
                         <div class="col-7 g-0">
-                          <input name="phone" oninput="formatCall(this)" class="custom-input" style="height:4vh; width:100%" type="text" placeholder="ex) 010-0000-0000">
+                          <input name="phone" oninput="formatCall(this)" class="custom-input" style="height:4vh; width:100%" type="text" placeholder=" 뒷 8자리 ex) 0000-0000">
                         </div>
                         <div class="col-1"></div>
                         <div class="col-3 mt-1">
-                          <button type="button" style="width:100%; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Confirm</button>
+                          <button th:onclick="confirmPhone()" type="button" style="width:100%; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Confirm</button>
                         </div>
                         <div class="col-1"></div>
                       </div>

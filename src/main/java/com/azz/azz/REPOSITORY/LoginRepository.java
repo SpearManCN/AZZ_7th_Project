@@ -11,3 +11,5 @@ public interface LoginRepository extends JpaRepository<Member, Integer> {
     public Member findByEmailLeftAndEmailRight(String emailLeft, String emailRight);
     public Member findByPhone(String phone);
 }
+
+

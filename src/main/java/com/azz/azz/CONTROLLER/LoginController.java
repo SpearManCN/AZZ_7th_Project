@@ -28,4 +28,15 @@ public class LoginController {
         }
 
     }
+    @ResponseBody
+    @PostMapping("/confirmPhone")
+    public int confirmPhone(Member member){
+        return loginService.confirmPhone(member);
+    }
+
+    @ResponseBody
+    @PostMapping("/confirmEmail")
+    public int confirmEmail(Member member){
+        return loginService.confirmEmail(member);
+    }
 }
