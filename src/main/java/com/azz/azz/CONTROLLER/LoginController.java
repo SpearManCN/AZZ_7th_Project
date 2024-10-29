@@ -19,6 +19,7 @@ public class LoginController {
     public String signUp(Member member){
         if(member.getSocial()==null)member.setSocial(0);
         int result = loginService.signUp(member);
+        System.out.println(member.toString());
         if(result == 1){
             return "이미 가입된 메일입니다.";
         }else if(result == 2){

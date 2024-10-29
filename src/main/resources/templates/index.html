@@ -82,11 +82,22 @@
     var emailFlag = false;
     var addressFlag = false;
     var phoneFlag = false;
-
+    var passwordFlag = false;
     function sendSignInForm(){
       const form = document.getElementById('signInForm');
       form.submit();
     }
+
+    function formatName(input) {
+      // 숫자만 남기기
+      let value= input.value;
+      // 최대 길이는 8자리까지만
+      if (value.length > 10) {
+        value = value.slice(0, 10);
+      }
+      input.value = value;
+    }
+
 
     function formatBirthday(input) {
       // 숫자만 남기기
@@ -121,10 +132,18 @@
     }
 
     function formatPassword(){
-      if($("[name=password]").val()==$("[name=password2]").val()){
+      if($("#pw").val().length>10){
+        $("#pw").val($("#pw").val().slice(0,10));
+      }
+      if($("#pw2").val().length>10){
+        $("#pw2").val($("#pw2").val().slice(0,10));
+      }
+      if($("#pw").val()==$("#pw2").val()){
         $("#passwordCompare").attr("hidden", true);
+        passwordFlag=true;
       }else{
         $("#passwordCompare").attr("hidden", false);
+        passwordFlag=false;
       }
 
     }
@@ -146,7 +165,30 @@
         $("#emailRight").val($("#emailInput").val());
       }
     }
+
     function signUpAjax(){
+      if($("[name=name]").val().length==0){
+        alert("이름을 입력해주세요.");
+        return;
+      }
+      if($("[name=birth]").val().length!=10){
+        alert("생일을 입력해주세요.");
+        return;
+      }
+      if($("#pw").val().length<4){
+        alert("비밀번호는 4~10자 입니다.")
+        return;
+      }
+      if($("[name=addressMain]").val().length==0){
+        alert("주소를 입력해주세요.");
+        return;
+      }
+      if(!(passwordFlag&&emailFlag&&addressFlag&&phoneFlag)){
+        alert("정보를 다시 확인해주세요.");
+        return;
+      }
+
+
       var formData = $('form[name="signUpForm"]').serialize();
 
       // AJAX 요청
@@ -215,7 +257,7 @@
         success: function(response) {
           if(response==1){
             if(confirm("사용 가능한 번호 입니다. 사용 하시겠습니까?")){
-              $("[name=phone]").prop("disabled",true);
+              $("[name=phone]").prop("readonly",true);
               phoneFlag=true;
             }else{
               $("[name=phone]").val("");
@@ -248,9 +290,9 @@
         success: function(response) {
           if(response==1){
             if(confirm("사용 가능한 메일 입니다. 사용 하시겠습니까?")){
-              $("[name=emailLeft]").prop("disabled",true);
+              $("[name=emailLeft]").prop("readonly",true);
               $("[id=customSelect]").prop("disabled",true);
-              $("[id=emailInput]").prop("disabled",true);
+              $("[id=emailInput]").prop("readonly",true);
               emailFlag=true;
             }else{
               $("[name=emailLeft]").val("");
@@ -490,7 +532,7 @@
                   <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
                     <i class="bi bi-person-circle flex-shrink-0"></i>
                     <div style="width:100%">
-                      <input name="name" class="custom-input" style="height:4vh; width:48%" type="text" placeholder="Name">
+                      <input name="name" oninput="formatName(this)" class="custom-input" style="height:4vh; width:48%" type="text" placeholder="Name">
                       <input name="birth" oninput="formatBirthday(this)" class="custom-input" style="height:4vh; width:48%" type="text" placeholder="Birth ex)1995-11-17">
                     </div>
                   </div>
@@ -514,8 +556,8 @@
                   <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
                     <i class="bi bi-p-circle flex-shrink-0"></i>
                     <div style="width:100%">
-                      <input name="password" oninput="formatPassword()" class="custom-input" style="height:4vh; width:48%" type="text" placeholder="4~10자리 비밀번호">
-                      <input name="password2" oninput="formatPassword()" class="custom-input" style="height:4vh; width:48%" type="text" placeholder="비밀번호 재입력">
+                      <input id="pw" name="password" oninput="formatPassword()" class="custom-input" style="height:4vh; width:48%" type="password" placeholder="4~10자리 비밀번호">
+                      <input id="pw2" oninput="formatPassword()" class="custom-input" style="height:4vh; width:48%" type="password" placeholder="비밀번호 재입력">
                       <span hidden id="passwordCompare" style="font-size:10px; width:50%">비밀번호가 서로 다릅니다</span>
                     </div>
 
@@ -526,7 +568,7 @@
                     <div class="container-fluid">
                       <div class="row mb-1">
                         <div class="col-12 g-0">
-                          <input name="addressMain" disabled class="custom-input" style="height:4vh; width:100%" type="text" placeholder="Search를 이용해주세요">
+                          <input name="addressMain" readonly class="custom-input" style="height:4vh; width:100%" type="text" placeholder="Search를 이용해주세요">
                         </div>
                       </div>
                       <div class="row d-flex">
