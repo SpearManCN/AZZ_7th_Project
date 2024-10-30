@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <title>AZZ - share your day</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/css/custom.css" rel="stylesheet">
+
+    <!-- =======================================================
+    * Template Name: Squadfree
+    * Template URL: https://bootstrapmade.com/squadfree-free-bootstrap-template-creative/
+    * Updated: Aug 07 2024 with Bootstrap v5.3.3
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ======================================================== -->
+    <script src="assets/js/custom.js"></script>
+</head>
+
+<body class="index-page">
+
+<header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+        <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
+            <h1 class="sitename">AZZ</h1>
+        </a>
+
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a href="#home" class="active">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="/home">Start</a></li>
+            </ul>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+
+    </div>
+</header>
+
+<main class="main">
+
+    <!-- Hero Section -->
+    <section id="home" class="hero section accent-background">
+
+        <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+
+        <div class="container text-center" data-aos="fade-up" data-aos-delay="100">
+            <h2>Welcome to AZZ</h2>
+            <p>WHAT'S ON TODAY'S MENU? SHOW IT AND SHARE IT</p>
+            <a href="#about" class="btn-scroll" title="Scroll Down"><i class="bi bi-chevron-down"></i></a>
+        </div>
+
+    </section><!-- /Hero Section -->
+
+    <!-- About Section -->
+    <section id="about" class="about section">
+
+        <div class="container">
+
+            <div class="row gy-5">
+
+                <div class="content col-xl-5 d-flex flex-column" data-aos="fade-up" data-aos-delay="100">
+                    <h3>AZZ에서 당신의 메뉴를 보여주세요</h3>
+                    <p>
+                    </p>
+                    <a href="/home" class="about-btn align-self-center align-self-xl-start"><span>start now</span> <i class="bi bi-chevron-right"></i></a>
+                </div>
+
+                <div class="col-xl-7" data-aos="fade-up" data-aos-delay="200">
+                    <div class="row gy-4">
+
+                        <div class="col-md-6 icon-box position-relative">
+                            <i class="bi bi-cloud-arrow-up"></i>
+                            <h4><a href="" class="stretched-link">나의 하루를 공유</a></h4>
+                            <p>매일 찾아오는 식사 시간. 사진과 함께 기록하고 공유하세요</p>
+                        </div><!-- Icon-Box -->
+
+                        <div class="col-md-6 icon-box position-relative">
+                            <i class="bi bi-chat-left-text"></i>
+                            <h4><a href="" class="stretched-link">그룹, 친구들과의 소통</a></h4>
+                            <p>나의 메뉴를 보여주고, 지인의 하루도 확인하세요</p>
+                        </div><!-- Icon-Box -->
+
+                        <div class="col-md-6 icon-box position-relative">
+                            <i class="bi bi-map"></i>
+                            <h4><a href="" class="stretched-link">가보고싶은 식당</a></h4>
+                            <p>누군가 후기를 남긴 식당을 확인하세요</p>
+                        </div><!-- Icon-Box -->
+
+                        <div class="col-md-6 icon-box position-relative">
+                            <i class="bi bi-heart"></i>
+                            <h4><a href="" class="stretched-link">셀럽들의 식사</a></h4>
+                            <p>내가 좋아하는 셀럽의 메뉴에 반응을 남기세요</p>
+                        </div><!-- Icon-Box -->
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section><!-- /About Section -->
+
+    <!-- Services Section -->
+    <section id="services" class="services section">
+
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+            <h2>How To Start</h2>
+            <p>간편하게 가입하고, 지인들과 관계를 맺고, 글을 게시하세요</p>
+        </div><!-- End Section Title -->
+
+        <div class="container">
+
+            <div class="row gy-4">
+
+                <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-item position-relative">
+                        <div class="icon"><i class="bi bi-envelope icon"></i></div>
+                        <h4><a href="#signIn" class="stretched-link">Sign Up & In</a></h4>
+                        <p>간단한 정보로 가입 가능합니다. 원한다면 기존 sns 계정으로 시작하세요!</p>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-item position-relative">
+                        <div class="icon"><i class="bi bi-person-square icon"></i></div>
+                        <h4><a href="#signIn" class="stretched-link">Create Profile</a></h4>
+                        <p>나의 프로필을 채워 다른사람들에게 소개해주세요</p>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-item position-relative">
+                        <div class="icon"><i class="bi bi-people icon"></i></div>
+                        <h4><a href="#singIn" class="stretched-link">Follow & Join</a></h4>
+                        <p>관심있는 사람을 follow 하고 원하는 그룹에 join 해서 소식을 받으세요</p>
+                    </div>
+                </div><!-- End Service Item -->
+
+                <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-item position-relative">
+                        <div class="icon"><i class="bi bi-instagram icon"></i></div>
+                        <h4><a href="#signIn" class="stretched-link">Posting</a></h4>
+                        <p>나의 아침 점심 저녁 그리고 하루를 기록하고 지인에게 공유하세요</p>
+                    </div>
+                </div><!-- End Service Item -->
+
+            </div>
+
+        </div>
+
+    </section><!-- /Services Section -->
+</main>
+
+<footer id="footer" class="footer dark-background">
+
+
+
+    <div class="container copyright text-center mt-4">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">Squadfree</strong> <span>All Rights Reserved</span></p>
+        <div class="credits">
+            <!-- All the links in the footer should remain intact. -->
+            <!-- You can delete the links only if you've purchased the pro version. -->
+            <!-- Licensing information: https://bootstrapmade.com/license/ -->
+            <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+    </div>
+
+</footer>
+
+<!-- Scroll Top -->
+<a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+<!-- Preloader -->
+<div id="preloader"></div>
+
+<!-- Vendor JS Files -->
+<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="assets/vendor/php-email-form/validate.js"></script>
+<script src="assets/vendor/aos/aos.js"></script>
+<script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+<script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+<script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+<!-- Main JS File -->
+<script src="assets/js/main.js"></script>
+
+</body>
+
+</html>

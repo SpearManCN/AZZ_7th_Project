@@ -37,4 +37,11 @@ public class LoginService {
         }
     }
 
+    public int signIn(Member member) {
+        if(loginRepository.findByEmailLeftAndEmailRightAndPassword(member.getEmailLeft(), member.getEmailRight(), member.getPassword())!=null){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
 }
