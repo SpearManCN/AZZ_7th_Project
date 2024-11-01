@@ -1,5 +1,6 @@
 package com.azz.azz.SERVICE;
 
+import com.azz.azz.DOMAIN.Member;
 import com.azz.azz.REPOSITORY.LoginRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,11 +14,22 @@ public class CustomUserDetailsService implements UserDetailsService {
     private LoginRepository loginRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        int social = 0;
+        if(username.contains("@kakao@")){
+            username=username.replace("@kakao@","");
+            social = 1;
+        }
         int atIndex = username.indexOf('@');
         String beforeAt = username.substring(0, atIndex);
         String afterAt = username.substring(atIndex + 1);
-        return loginRepository.findByEmailLeftAndEmailRight(beforeAt, afterAt)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        System.out.println(beforeAt);
+        System.out.println(afterAt);
+        System.out.println(social);
+        final String finalUsername = username;
+        Member mm = loginRepository.findByEmailLeftAndEmailRightAndSocial(beforeAt, afterAt, social)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + finalUsername));
+        System.out.println(mm.toString());
+        return mm;
     }
 
 }

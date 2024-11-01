@@ -13,12 +13,15 @@ public class LoginService {
     private LoginRepository loginRepository;
 
     public int signUp(Member member){
-        if(loginRepository.findByEmailLeftAndEmailRight(member.getEmailLeft(),member.getEmailRight())!=null){
+        if(loginRepository.findByEmailLeftAndEmailRightAndSocial(member.getEmailLeft(),member.getEmailRight(),member.getSocial()).isPresent()){
+            System.out.println(" sigup 1리턴");
             return 1; // 메일 중복시 1 반환
         }
         if(loginRepository.save(member)==null){
+            System.out.println(" sigup 2리턴");
             return 2; // 저장이 실패시 2 반환
         }
+        System.out.println(" sigup 3");
         return 3; // 저장 성공시 3 반환
     }
 
@@ -29,8 +32,9 @@ public class LoginService {
             return 0; // 중복된 번호가 이미 존재.
         }
     }
+
     public int confirmEmail(Member member){
-        if(loginRepository.findByEmailLeftAndEmailRight(member.getEmailLeft(), member.getEmailRight())==null){
+        if(loginRepository.findByEmailLeftAndEmailRightAndSocial(member.getEmailLeft(), member.getEmailRight(), member.getSocial()).isEmpty()){
             return 1; // 해당 메일이 없음
         }else{
             return 0; // 중복된 메일이 이미 존재.
@@ -38,7 +42,7 @@ public class LoginService {
     }
 
     public int signIn(Member member) {
-        if(loginRepository.findByEmailLeftAndEmailRightAndPassword(member.getEmailLeft(), member.getEmailRight(), member.getPassword())!=null){
+        if(loginRepository.findByEmailLeftAndEmailRightAndSocialAndPassword(member.getEmailLeft(), member.getEmailRight(), member.getSocial(), member.getPassword())!=null){
             return 1;
         }else{
             return 0;
