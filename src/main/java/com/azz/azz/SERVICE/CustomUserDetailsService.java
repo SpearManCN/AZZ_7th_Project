@@ -14,21 +14,18 @@ public class CustomUserDetailsService implements UserDetailsService {
     private LoginRepository loginRepository;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        int social = 0;
+        System.out.println("CustomUserDetailsService.loadUserByUsername");
+        String social="0";
         if(username.contains("@kakao@")){
             username=username.replace("@kakao@","");
-            social = 1;
+            social = "1";
         }
         int atIndex = username.indexOf('@');
         String beforeAt = username.substring(0, atIndex);
         String afterAt = username.substring(atIndex + 1);
-        System.out.println(beforeAt);
-        System.out.println(afterAt);
-        System.out.println(social);
         final String finalUsername = username;
         Member mm = loginRepository.findByEmailLeftAndEmailRightAndSocial(beforeAt, afterAt, social)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + finalUsername));
-        System.out.println(mm.toString());
         return mm;
     }
 

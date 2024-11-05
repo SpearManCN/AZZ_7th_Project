@@ -31,7 +31,7 @@ public class SecurityConfig{
         http.csrf(httpSecurityCsrfConfigurer -> httpSecurityCsrfConfigurer.disable());
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login/**","/api/kakaoAuth","/kakaoLogin","/assets/**").permitAll() // 누구나 접근 가능
+                        .requestMatchers("/findUser","/changePw","/login/**","/api/kakaoAuth","/kakaoLogin","/assets/**").permitAll() // 누구나 접근 가능
                         .anyRequest().authenticated() // 그 외 모든 요청은 인증 필요
                 )
                 .formLogin(form -> form // 로그인 설정

@@ -2,6 +2,8 @@ var emailFlag = false;
 var addressFlag = false;
 var phoneFlag = false;
 var passwordFlag = false;
+
+
 function sendSignInForm(){
     const form = document.getElementById('signInForm');
     form.submit();

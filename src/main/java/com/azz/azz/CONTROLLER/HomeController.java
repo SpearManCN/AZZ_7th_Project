@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
     @GetMapping
     public String home(Model model) {
+        System.out.println("HomeController.home");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Member member = (Member) auth.getPrincipal();
 
         model.addAttribute("member", member);
-        return "homeBefore";
+        return "home";
     }
 }

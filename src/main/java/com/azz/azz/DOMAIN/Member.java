@@ -14,7 +14,7 @@ public class Member implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer no;
-    private Integer social; // 0 이면 일반, 1은 카카오 ...
+    private String social; // 0 이면 일반, 1은 카카오 ...
     private String name;
     private String birth;
     private String password;

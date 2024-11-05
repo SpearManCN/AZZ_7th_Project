@@ -8,20 +8,24 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 
 @Controller
 public class IndexController {
     @GetMapping("/")
-    public String index(Model model){
+    public String index(Model model, @RequestParam(required = false)String error ){
+        System.out.println("IndexController.index");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.isAuthenticated()) {
             System.out.println("로그인 성공: " + auth.getName());
         } else {
             System.out.println("로그인 실패");
         }
-
+        if(error != null){
+            model.addAttribute("error", error);
+        }
 
         if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {
             // 사용자가 로그인한 상태
@@ -31,4 +35,11 @@ public class IndexController {
             return "index";
         }
     }
+
+    @GetMapping("/findUser")
+    public String findUser(Model model){
+        return "indexFindUser";
+    }
+
+
 }
