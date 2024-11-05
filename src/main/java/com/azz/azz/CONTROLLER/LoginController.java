@@ -3,6 +3,7 @@ package com.azz.azz.CONTROLLER;
 import com.azz.azz.DOMAIN.Member;
 import com.azz.azz.SERVICE.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,5 +43,22 @@ public class LoginController {
         return loginService.confirmEmail(member);
     }
 
+    @ResponseBody
+    @PostMapping("/findUser")
+    public int findUser(Member member){
+        System.out.println("LoginController.findUser");
+        Member response = loginService.findUser(member);
+        if(response==null){
+            return -1;
+        }else{
+            return response.getNo();
+        }
+    }
 
+    @ResponseBody
+    @PostMapping("/changePw")
+    public int changePw(Member member){
+        System.out.println("LoginController.changePw");
+        return loginService.updatePassword(member);
+    }
 }

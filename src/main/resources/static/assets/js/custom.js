@@ -3,6 +3,50 @@ var addressFlag = false;
 var phoneFlag = false;
 var passwordFlag = false;
 
+function findAjax(){
+    var formData = $('form[name="signUpForm"]').serialize();
+
+    // AJAX 요청
+    $.ajax({
+        type: "POST",
+        url: "/login/findUser",
+        data: formData,
+        success: function(response) {
+            if(response===-1){
+                alert("해당하는 Email이 없습니다.")
+            }else{
+                window.location.href = "/changePw?no="+response;
+            }
+        },
+        error: function(error) {
+            alert("An error occurred.");
+            // 에러 처리 로직
+        }
+    });
+}
+
+function changePwAjax(){
+    var formData = $('form[name="signUpForm"]').serialize();
+
+    // AJAX 요청
+    $.ajax({
+        type: "POST",
+        url: "/login/changePw",
+        data: formData,
+        success: function(response) {
+            if(response===1){
+                alert("비밀번호가 변경되었습니다.");
+                window.location.href = "/";
+            }else{
+                alert("오류가 발생했습니다.");
+            }
+        },
+        error: function(error) {
+            alert("An error occurred.");
+            // 에러 처리 로직
+        }
+    });
+}
 
 function sendSignInForm(){
     const form = document.getElementById('signInForm');

@@ -54,8 +54,6 @@
         <nav id="navmenu" class="navmenu">
             <ul>
                 <li><a href="/home" class="active">Home</a></li>
-                <li><a href="#findUser"></a>Find ID/PW</li>
-                <li><a href="/home">Start</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
@@ -64,12 +62,25 @@
 </header>
 
 <main class="main">
+
+    <!-- Hero Section -->
+    <section id="home" class="hero section accent-background">
+
+        <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
+
+        <div class="container text-center" data-aos="fade-up" data-aos-delay="100">
+            <h2>Welcome to AZZ</h2>
+            <p>WHAT'S ON TODAY'S MENU? SHOW IT AND SHARE IT</p>
+            <a href="#about" class="btn-scroll" title="Scroll Down"><i class="bi bi-chevron-down"></i></a>
+        </div>
+
+    </section><!-- /Hero Section -->
     <!--     Contact Section -->
     <section id="findUser" class="contact section">
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-            <h2>Sign Up</h2>
+            <h2>Find ID</h2>
 
         </div><!-- End Section Title -->
 
@@ -102,7 +113,7 @@
                                         <option value="daum.net">daum.net</option>
                                     </select>
                                     <input id="emailRight" name="emailRight" style="visibility: hidden; height:4vh; width:30%;">
-                                    <button th:onclick="confirmEmail()" type="button" style=" height:3vh; width:26%; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Confirm</button>
+                                    <button  th:onclick="confirmEmail()" type="button" style="visibility: hidden; height:3vh; width:26%; border-radius: 10px; color: rgb(103,176,209); background-color: white; border: 1px solid rgb(103,176,209) ;">Confirm</button>
                                     <input th:oninput="handleSelectChange()" id="emailInput" class="mt-1 custom-input" style="height:4vh; width:40%" type="text" placeholder="  ">
                                 </div>
                             </div>
@@ -132,6 +143,7 @@
         </div>
 
     </section><!-- /Contact Section -->
+    <input type="hidden" id="no">
 </main>
 
 <footer id="footer" class="footer dark-background">

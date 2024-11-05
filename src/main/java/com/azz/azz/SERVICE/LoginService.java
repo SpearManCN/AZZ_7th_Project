@@ -49,4 +49,18 @@ public class LoginService {
             return 0;
         }
     }
+
+    public Member findUser(Member member) {
+        System.out.println("LoginService.findUser");
+        return loginRepository.findByEmailLeftAndEmailRightAndPhoneAndNameAndBirth(member.getEmailLeft(),member.getEmailRight(),member.getPhone(),member.getName(),member.getBirth());
+    }
+
+    public int updatePassword(Member member) {
+        System.out.println("LoginService.updatePassword");
+        if(loginRepository.updatePassword(member.getPassword(), member.getNo())==0){
+            return 0;
+        }else{
+            return 1;
+        }
+    }
 }

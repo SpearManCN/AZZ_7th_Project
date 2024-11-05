@@ -41,5 +41,12 @@ public class IndexController {
         return "indexFindUser";
     }
 
+    @GetMapping("/changePw")
+    public String changePw(Model model, @RequestParam(required = true) int no){
+        model.addAttribute("no", no);
+        return "indexChangePw";
+    }
+
+
 
 }
