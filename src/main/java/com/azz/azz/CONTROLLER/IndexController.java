@@ -24,7 +24,10 @@ public class IndexController {
             System.out.println("로그인 실패");
         }
         if(error != null){
+            System.out.println("error 들어옴");
             model.addAttribute("error", error);
+        }else{
+            System.out.println("error 안들어옴");
         }
 
         if (auth != null && auth.isAuthenticated() && !(auth instanceof AnonymousAuthenticationToken)) {

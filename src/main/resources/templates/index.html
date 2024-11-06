@@ -201,7 +201,7 @@
                       <span style="width:14vw; font-size:2.5vw; color:rgb(103,176,209)">ID</span>
                     </div>
                     <div class="col-9 mt-2">
-                      <input name="username" style="width:80%" class="custom-input" type="text" placeholder="example@domain.com">
+                      <input id="loginEmail" name="username" style="width:80%" class="custom-input" type="text" placeholder="example@domain.com">
                     </div>
                   </div>
                   <div class="row mb-4">
@@ -209,7 +209,7 @@
                       <span style="width:14vw; font-size:2.5vw; color:rgb(103,176,209)">PW</span>
                     </div>
                     <div class="col-9 mt-2">
-                      <input name="password" style="width:80%" class="custom-input" type="password" placeholder="**********">
+                      <input id="loginPw" name="password" style="width:80%" class="custom-input" type="password" placeholder="**********">
                     </div>
                   </div>
                   <div class="row mb-2">
@@ -222,7 +222,7 @@
                   </div>
                   <div class="row">
                     <div class="col" style="display: flex; justify-content: flex-end;">
-                      <span th:onclick="window.location.href='/findUser'" style="cursor: pointer;width:8vw; font-size:1vw; color:rgb(103,176,209)">ID/PW 찾기</span>
+                      <span onclick="window.location.href='/findUser#findUser'" style="cursor: pointer;width:8vw; font-size:1vw; color:rgb(103,176,209)">ID/PW 찾기</span>
                     </div>
                   </div>
                 </div>
@@ -340,7 +340,11 @@
 
         </section><!-- /Contact Section -->
 
-
+    <div th:if="${error}">
+      <script>
+        alert("Email (ID) 와 비밀번호를 다시 확인해주세요.");
+      </script>
+    </div>
   </main>
 
   <footer id="footer" class="footer dark-background">

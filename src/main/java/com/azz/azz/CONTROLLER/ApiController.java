@@ -81,6 +81,7 @@ public class ApiController {
     public String getKakaoLoginUrl() {
         System.out.println("ApiController.getKakaoLoginUrl");
         String clientId = "089f7b2b7117e7dfafb58a1638cc179e"; // 카카오 개발자 사이트에서 발급받은 REST API 키
+//        String redirectUri = "http://54.180.202.42:8080/api/kakaoAuth"; // 인가 코드를 받을 URI
         String redirectUri = "http://localhost:8080/api/kakaoAuth"; // 인가 코드를 받을 URI
 //        String state = "YOUR_STATE"; // CSRF 방지를 위한 임의의 값
 
@@ -94,6 +95,7 @@ public class ApiController {
         System.out.println("ApiController.kakaoAuthCallback");
         String clientId = "089f7b2b7117e7dfafb58a1638cc179e"; // 카카오 개발자 사이트에서 발급받은 REST API 키
         String redirectUri = "http://localhost:8080/api/kakaoAuth"; // 인가 코드를 받을 URI
+//        String redirectUri = "http://54.180.202.42:8080/api/kakaoAuth"; // 인가 코드를 받을 URI
         String url = "https://kauth.kakao.com/oauth/token";
 
         RestTemplate restTemplate = new RestTemplate();

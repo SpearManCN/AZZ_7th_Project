@@ -3,6 +3,12 @@ var addressFlag = false;
 var phoneFlag = false;
 var passwordFlag = false;
 
+$(function(){
+    if($("#error").val()!=null){
+        alert("Email (ID) 와 비밀번호를 확인해주세요.");
+    }
+});
+
 function findAjax(){
     var formData = $('form[name="signUpForm"]').serialize();
 
@@ -15,7 +21,7 @@ function findAjax(){
             if(response===-1){
                 alert("해당하는 Email이 없습니다.")
             }else{
-                window.location.href = "/changePw?no="+response;
+                window.location.href = "/changePw#findUser?no="+response;
             }
         },
         error: function(error) {
@@ -49,6 +55,20 @@ function changePwAjax(){
 }
 
 function sendSignInForm(){
+    var email = $("#loginEmail").val();
+    if( !email.contains("@")   ) {
+        alert("@를 포함한 Email을 입력해주세요.");
+        return;
+    }
+    var emailAt = email.indexOf("@");
+    var emailLeft = email.substring(0,emailAt);
+    var emailRight = email.substring(emailAt+1);
+    if(emailLeft.length <1 || emailRight < 1){
+        alert("Email 형식을 확인해주세요.");
+        return;
+    }
+
+
     const form = document.getElementById('signInForm');
     form.submit();
 }
@@ -163,10 +183,12 @@ function signUpAjax(){
         data: formData,
         success: function(response) {
             alert(response);
+            window.location.href = "/";
             // 서버 응답 처리 로직
         },
         error: function(error) {
             alert("An error occurred.");
+            window.location.href = "/";
             // 에러 처리 로직
         }
     });
