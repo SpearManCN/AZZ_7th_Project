@@ -55,8 +55,9 @@ function changePwAjax(){
 }
 
 function sendSignInForm(){
-    var email = $("#loginEmail").val();
-    if( !email.contains("@")   ) {
+
+    let email = $("#loginEmail").val();
+    if( !email.includes("@")   ) {
         alert("@를 포함한 Email을 입력해주세요.");
         return;
     }
