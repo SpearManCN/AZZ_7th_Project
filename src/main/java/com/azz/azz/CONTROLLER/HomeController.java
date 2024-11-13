@@ -14,18 +14,18 @@ public class HomeController {
     @GetMapping
     public String home(Model model) {
         System.out.println("HomeController.home");
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Member member = (Member) auth.getPrincipal();
-
-        model.addAttribute("member", member);
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        Member member = (Member) auth.getPrincipal();
+//
+//        model.addAttribute("member", member);
         return "home";
     }
 
     @GetMapping("/post")
     public String post(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Member member = (Member) auth.getPrincipal();
-        model.addAttribute("member", member);
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        Member member = (Member) auth.getPrincipal();
+//        model.addAttribute("member", member);
         return "homePost";
     }
 }
