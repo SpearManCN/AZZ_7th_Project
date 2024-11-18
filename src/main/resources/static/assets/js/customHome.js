@@ -47,3 +47,54 @@ function confirmUpload(event){
 function clickUploadThumbNail(){
     $("[name=files]").click();
 }
+function clickAddPictureBt(){
+    $("[name=files]").click();
+}
+
+let index = 0;
+let images = [];
+$("[name=files]").change(function(event){
+    $("#previewDiv").empty();
+    images = [];
+    index = 0;
+    const files = event.target.files;
+    $("#pictureController").text("<"+(index+1)+"/"+files.length+">");
+    for(let i=0; i< files.length; i++){
+        const file = files[i];
+        const reader = new FileReader();
+        reader.onload = function(e){
+            // 이미지 배열에 이미지 데이터 추가
+            const img = $("<img>").attr("src", e.target.result);
+            images.push(img);
+
+            // 첫 번째 이미지만 표시
+            if (images.length === 1) {
+                $("#previewDiv").append(img);
+                img.show();
+            }
+        }
+        reader.readAsDataURL(file);
+    }
+
+});
+
+// 좌우 화살표 클릭 시 이미지 슬라이드
+$(".arrowLeft").click(function() {
+    if (images.length > 0) {
+        images[index].hide(); // 현재 이미지 숨김
+        index = (index - 1 + images.length) % images.length; // 이전 인덱스로 이동
+        $("#previewDiv").append(images[index]); // 새 이미지 추가
+        images[index].show(); // 새 이미지 표시
+        $("#pictureController").text("<"+(index+1)+"/"+images.length+">");
+    }
+});
+
+$(".arrowRight").click(function() {
+    if (images.length > 0) {
+        images[index].hide(); // 현재 이미지 숨김
+        index = (index + 1) % images.length; // 다음 인덱스로 이동
+        $("#previewDiv").append(images[index]); // 새 이미지 추가
+        images[index].show(); // 새 이미지 표시
+        $("#pictureController").text("<"+(index+1)+"/"+images.length+">");
+    }
+});

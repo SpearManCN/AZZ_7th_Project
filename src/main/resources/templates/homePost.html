@@ -396,10 +396,10 @@
                                     <li class="dropdown-header text-start">
                                         <h6>Filter</h6>
                                     </li>
-
+                                    <input type="">
                                     <li><span class="dropdown-item" style="cursor: pointer" th:onclick="setType(0)">Record Only</span></li>
-                                    <li><span class="dropdown-item" style="cursor: pointer" th:onclick="setType(1)">To all</span></li>
-                                    <li><span class="dropdown-item" style="cursor: pointer" th:onclick="setType(2)">To Group</span>
+                                    <li><span class="dropdown-item" style="cursor: pointer" th:onclick="setType(1)">To Group</span></li>
+                                    <li><span class="dropdown-item" style="cursor: pointer" th:onclick="setType(2)">To All</span>
                                         <ul id="filterGroupName" style="visibility: hidden" class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                             <li class="dropdown-header text-start">
                                                 <h6 id="groupNameHeader">그룹 선택</h6>
@@ -413,10 +413,10 @@
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Post <span id="postTypeSpan"></span></h5>
+                                <h5 class="card-title">Post <span id="postTypeSpan">/ To all</span></h5>
 
                                 <div class="row">
-                                    <div class="col-8 d-flex justify-content-center">
+                                    <div id="previewDiv" class="col-8 d-flex justify-content-center">
                                         <img onclick="clickUploadThumbNail()" id="uploadThumbNail" src="/assets/img/uploadThumbNail.png" style="aspect-ratio: 4 / 5; object-fit: cover; max-width: 100%; max-height: 100%">
                                     </div>
                                     <div class="col-4">
@@ -430,7 +430,13 @@
                                     </div>
                                 </div>
                                 <div class="row mt-1">
-                                    <div class="col-8"><input style="display: none" type="file" multiple name="files" accept="image/*" placeholder="사진+"></div>
+                                    <div class="col-8">
+                                        <span style="cursor:pointer" class="arrowLeft">이전 사진</span>
+                                        <span id="pictureController"><0/0></span>
+                                        <span style="cursor: pointer" class="arrowRight">다음 사진</span>
+                                        <button type="reset" onclick="clickAddPictureBt()">사진 추가</button>
+                                        <input style="display: none" type="file" multiple name="files" accept="image/*" placeholder="사진+">
+                                    </div>
                                     <div class="col-4"></div>
                                 </div>
 
