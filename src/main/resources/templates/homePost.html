@@ -303,7 +303,7 @@
 
     <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-            <a class="nav-link " href="index.html">
+            <a class="nav-link " href="/home">
                 <i class="bi bi-grid"></i>
                 <span>Feed</span>
             </a>
@@ -377,7 +377,8 @@
 
 <main id="main" class="main">
 <form name="uploadForm" method="post" action="/post/upload" enctype="multipart/form-data">
-    <input type="hidden" name="postType">
+    <input type="hidden" name="post_type" value="2">
+    <input type="hidden" name="member_no" th:value="1" >
 
     <section class="section dashboard">
         <div class="row">
@@ -396,7 +397,6 @@
                                     <li class="dropdown-header text-start">
                                         <h6>Filter</h6>
                                     </li>
-                                    <input type="">
                                     <li><span class="dropdown-item" style="cursor: pointer" th:onclick="setType(0)">Record Only</span></li>
                                     <li><span class="dropdown-item" style="cursor: pointer" th:onclick="setType(1)">To Group</span></li>
                                     <li><span class="dropdown-item" style="cursor: pointer" th:onclick="setType(2)">To All</span>
@@ -416,7 +416,7 @@
                                 <h5 class="card-title">Post <span id="postTypeSpan">/ To all</span></h5>
 
                                 <div class="row">
-                                    <div id="previewDiv" class="col-8 d-flex justify-content-center">
+                                    <div id="previewDiv" style="aspect-ratio: 1 / 1;" class="col-8 d-flex justify-content-center">
                                         <img onclick="clickUploadThumbNail()" id="uploadThumbNail" src="/assets/img/uploadThumbNail.png" style="aspect-ratio: 4 / 5; object-fit: cover; max-width: 100%; max-height: 100%">
                                     </div>
                                     <div class="col-4">
@@ -457,6 +457,12 @@
                             </div>
 
                         </div>
+
+
+
+
+
+
                     </div><!-- End Reports -->
 
 

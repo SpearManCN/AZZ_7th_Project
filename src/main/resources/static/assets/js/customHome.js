@@ -2,12 +2,15 @@ function setType(type) {
     if (type === 0) {
         $("#filterGroupName").css("visibility","hidden");
         $("#postTypeSpan").text("/ Record Only");
+        $("[name=post_type]").val("0");
     } else if (type === 1) {
         $("#filterGroupName").css("visibility","visible");
         $("#postTypeSpan").text("/ To group");
+        $("[name=post_type]").val("1");
     } else if (type === 2) {
         $("#filterGroupName").css("visibility","hidden");
         $("#postTypeSpan").text("/ To all");
+        $("[name=post_type]").val("2");
     }
 }
 //1234567890 1234567890 1234567890 12345678
